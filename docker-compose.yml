@@ -12,9 +12,26 @@ services:
       - mongo_data:/data/db
     networks:
       - app-network
+  broker:
+    image: rabbitmq:3.13.7-management
+    container_name: weather_broker
+    restart: always
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app-network
 
 volumes:
   mongo_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
 
 networks:
   app-network:
