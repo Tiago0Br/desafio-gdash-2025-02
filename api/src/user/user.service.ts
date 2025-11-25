@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
-import { User } from './schemas/user.schema'
+import { User, UserDocument } from './schemas/user.schema'
 
 @Injectable()
 export class UserService {
@@ -12,11 +12,11 @@ export class UserService {
     return createdUser.save()
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserDocument[]> {
     return this.userModel.find().exec()
   }
 
-  async findUniqueByEmail(email: string): Promise<User | null> {
+  async findUniqueByEmail(email: string): Promise<UserDocument | null> {
     return this.userModel.findOne({ email }).exec()
   }
 
@@ -30,7 +30,7 @@ export class UserService {
     return result
   }
 
-  async updateById(id: string, user: User): Promise<User> {
+  async updateById(id: string, user: User): Promise<UserDocument> {
     const result = await this.userModel.findByIdAndUpdate(id, user).exec()
 
     if (!result) {
@@ -40,7 +40,7 @@ export class UserService {
     return result
   }
 
-  async deleteById(id: string): Promise<User> {
+  async deleteById(id: string): Promise<UserDocument> {
     const result = await this.userModel.findByIdAndDelete(id).exec()
 
     if (!result) {

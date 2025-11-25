@@ -1,4 +1,5 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
+import { Public } from 'src/auth/public'
 import { ZodValidationPipe } from 'src/http/pipes/zod-validation.pipe'
 import z from 'zod'
 import { UserService } from './user.service'
@@ -6,7 +7,7 @@ import { UserService } from './user.service'
 const createUserBodySchema = z.object({
   name: z.string(),
   email: z.string(),
-  password: z.string()
+  password: z.string().min(6)
 })
 
 type CreateUserBodySchema = z.infer<typeof createUserBodySchema>
@@ -17,6 +18,7 @@ const bodyValidationPipe = new ZodValidationPipe(createUserBodySchema)
 export class CreateUserController {
   constructor(private userService: UserService) {}
 
+  @Public()
   @Post()
   async handle(@Body(bodyValidationPipe) body: CreateUserBodySchema) {
     const userExists = await this.userService.findUniqueByEmail(body.email)

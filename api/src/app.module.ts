@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
+import { AuthModule } from './auth/auth.module'
 import { envSchema } from './env/env'
 import { EnvModule } from './env/env.module'
 import { EnvService } from './env/env.service'
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module'
       }),
       inject: [EnvService]
     }),
+    AuthModule,
     EnvModule,
     UserModule
   ]
