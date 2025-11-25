@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { envSchema } from './env/env'
 import { EnvModule } from './env/env.module'
 import { EnvService } from './env/env.service'
+import { UserModule } from './user/user.module'
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { EnvService } from './env/env.service'
       }),
       inject: [EnvService]
     }),
-    EnvModule
+    EnvModule,
+    UserModule
   ]
 })
 export class AppModule {}
