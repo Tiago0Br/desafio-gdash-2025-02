@@ -6,6 +6,7 @@ import { envSchema } from './env/env'
 import { EnvModule } from './env/env.module'
 import { EnvService } from './env/env.service'
 import { UserModule } from './user/user.module'
+import { WeatherModule } from './weather/weather.module'
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { UserModule } from './user/user.module'
     }),
     AuthModule,
     EnvModule,
-    UserModule
+    UserModule,
+    WeatherModule
   ]
 })
 export class AppModule {}
