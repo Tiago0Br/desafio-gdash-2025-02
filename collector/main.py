@@ -14,18 +14,20 @@ def main():
 
   weather_data = get_weather_data(config.OPENMETEO_URL, config.REGION_NAME)
 
-  if weather_data:
-    try:
-      with RabbitMQPublisher(
-        host=config.RABBITMQ_HOST,
-        port=config.RABBITMQ_PORT,
-        user=config.RABBITMQ_USER,
-        password=config.RABBITMQ_PASS,
-        queue_name=config.QUEUE_NAME
-      ) as publisher:
-        publisher.publish(weather_data)
-    except Exception as e:
-      logger.error(f"Failed to publish data: {e}")
+  print(weather_data)
+
+  # if weather_data:
+  #   try:
+  #     with RabbitMQPublisher(
+  #       host=config.RABBITMQ_HOST,
+  #       port=config.RABBITMQ_PORT,
+  #       user=config.RABBITMQ_USER,
+  #       password=config.RABBITMQ_PASS,
+  #       queue_name=config.QUEUE_NAME
+  #     ) as publisher:
+  #       publisher.publish(weather_data)
+  #   except Exception as e:
+  #     logger.error(f"Failed to publish data: {e}")
 
 if __name__ == "__main__":
   main()

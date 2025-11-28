@@ -17,4 +17,4 @@ assert LAT is not None, "REGION_LAT is not defined"
 assert LON is not None, "REGION_LON is not defined"
 assert REGION_NAME is not None, "REGION_NAME is not defined"
 
-OPENMETEO_URL = f"https://api.open-meteo.com/v1/forecast?latitude={LAT}&longitude={LON}&current=temperature_2m,relative_humidity_2m,weather_code"
+OPENMETEO_URL = f"https://api.open-meteo.com/v1/forecast?latitude={LAT}&longitude={LON}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m"

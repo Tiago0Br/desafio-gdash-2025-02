@@ -16,7 +16,7 @@ def get_weather_data(api_url: str, region_name: str) -> Optional[Dict[str, Any]]
     hourly = data.get('hourly', {})
 
     current_time_iso = current.get('time')
-    
+
     rain_probability = 0
     if current_time_iso in hourly.get('time', []):
       index = hourly['time'].index(current_time_iso)
@@ -29,7 +29,7 @@ def get_weather_data(api_url: str, region_name: str) -> Optional[Dict[str, Any]]
       "wind_speed": current.get('wind_speed_10m'),
       "weather_code": current.get('weather_code'),
       "rain_probability": rain_probability,
-      "collectedAt": current_time_iso
+      "collected_at": current_time_iso
     }
     
     logger.info("Weather data fetched successfully")
