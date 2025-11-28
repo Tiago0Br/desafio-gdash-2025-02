@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+COLLECTION_INTERVAL = int(os.getenv('COLLECTION_INTERVAL', 3600)) # 1 hour
 RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', 'localhost')
 RABBITMQ_PORT = int(os.getenv('RABBITMQ_PORT', 5672))
 RABBITMQ_USER = os.getenv('RABBITMQ_USER', 'guest')
