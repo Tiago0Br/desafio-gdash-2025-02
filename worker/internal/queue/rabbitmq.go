@@ -74,7 +74,7 @@ func (r *RabbitMQConsumer) Start() error {
 				continue
 			}
 
-			if err := r.Sender.Send(data); err != nil {
+			if err := r.Sender.SendWithRetry(data); err != nil {
 				log.Printf("Error sending data: %s\n", err)
 			}
 		}

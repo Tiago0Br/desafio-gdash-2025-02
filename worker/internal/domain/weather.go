@@ -7,5 +7,5 @@ type WeatherData struct {
 	WindSpeed       float64 `json:"wind_speed"`
 	WeatherCode     float64 `json:"weather_code"`
 	RainProbability float64 `json:"rain_probability"`
-	CollectedAt     string  `json:"collectedAt"`
+	CollectedAt     string  `json:"collected_at"`
 }

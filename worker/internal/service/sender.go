@@ -7,8 +7,14 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"time"
 
 	"worker/internal/domain"
+)
+
+const (
+	maxRetries = 3
+	delay      = 5 * time.Second
 )
 
 type WeatherSender struct {
@@ -44,4 +50,15 @@ func (s *WeatherSender) Send(data domain.WeatherData) error {
 
 	body, _ := io.ReadAll(res.Body)
 	return fmt.Errorf("failed to send message: %s. Body: %s", res.Status, string(body))
+}
+
+func (s *WeatherSender) SendWithRetry(data domain.WeatherData) error {
+	for range maxRetries {
+		if err := s.Send(data); err == nil {
+			return nil
+		}
+		fmt.Println("Failed to send message, retrying...")
+		time.Sleep(delay)
+	}
+	return fmt.Errorf("failed to send message after %d retries", maxRetries)
 }
