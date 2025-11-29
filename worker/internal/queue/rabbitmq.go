@@ -52,7 +52,7 @@ func (r *RabbitMQConsumer) Start() error {
 	messages, err := ch.Consume(
 		q.Name,
 		"",
-		true,
+		false,
 		false,
 		false,
 		false,
@@ -71,11 +71,15 @@ func (r *RabbitMQConsumer) Start() error {
 			var data domain.WeatherData
 			if err := json.Unmarshal(d.Body, &data); err != nil {
 				log.Printf("Failed to unmarshal message: %s\n", err)
+				d.Nack(false, false)
 				continue
 			}
 
 			if err := r.Sender.SendWithRetry(data); err != nil {
 				log.Printf("Error sending data: %s\n", err)
+				d.Nack(false, false)
+			} else {
+				d.Ack(false)
 			}
 		}
 	}()
