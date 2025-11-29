@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { CreateWeatherRecordsController } from './create-weather-records.controller'
 import { ExportWeatherDataCsvController } from './export-weather-data-csv.controller'
+import { ExportWeatherDataXlsxController } from './export-weather-data-xlsx.controller'
 import { GetWeatherLogsController } from './get-weather-logs.controller'
 import { Weather, WeatherSchema } from './schemas/weather.schema'
 import { WeatherService } from './weather.service'
@@ -13,7 +14,8 @@ import { WeatherService } from './weather.service'
   controllers: [
     CreateWeatherRecordsController,
     GetWeatherLogsController,
-    ExportWeatherDataCsvController
+    ExportWeatherDataCsvController,
+    ExportWeatherDataXlsxController
   ],
   providers: [WeatherService],
   exports: [WeatherService]

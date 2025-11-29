@@ -25,11 +25,11 @@ export class ExportWeatherDataCsvController {
     @Res() res: Response,
     @Query(zodValidationPipe) { limit }: ExportWeatherDataCsvQuerySchema
   ) {
-    const csv = await this.weatherService.findAllCsv(limit)
+    const csv = await this.weatherService.findAndExportCsv(limit)
 
     res.set({
       'Content-Type': 'text/csv',
-      'Content-Disposition': 'attachment; filename="clima_logs.csv"'
+      'Content-Disposition': 'attachment; filename="weather_logs.csv"'
     })
 
     res.send(csv)
