@@ -12,8 +12,8 @@ export class WeatherService {
     return createdWeather.save()
   }
 
-  async findAll() {
-    return this.weatherModel.find().exec()
+  async findAll(limit = 20, offset = 0) {
+    return this.weatherModel.find().skip(offset).limit(limit).exec()
   }
 
   async findMostRecent() {
