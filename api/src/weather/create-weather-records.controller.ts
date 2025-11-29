@@ -11,7 +11,7 @@ const createWeatherRecordsBodySchema = z.object({
   wind_speed: z.number().default(0),
   weather_code: z.number(),
   rain_probability: z.number(),
-  collectedAt: z.string()
+  collected_at: z.string()
 })
 
 type CreateWeatherRecordsBodySchema = z.infer<
@@ -34,10 +34,8 @@ export class CreateWeatherRecordsController {
       windSpeed: body.wind_speed,
       weatherCode: body.weather_code,
       rainProbability: body.rain_probability,
-      collectedAt: body.collectedAt
+      collectedAt: body.collected_at
     })
-
-    console.log(body)
 
     return {
       message: 'Weather records created successfully'
