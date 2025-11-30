@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
-import { Public } from 'src/auth/public'
-import { ZodValidationPipe } from 'src/http/pipes/zod-validation.pipe'
 import z from 'zod'
+import { Public } from '@/infra/auth/public'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { UserService } from './user.service'
 
 const createUserBodySchema = z.object({

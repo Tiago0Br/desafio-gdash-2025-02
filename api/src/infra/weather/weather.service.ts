@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import * as ExcelJS from 'exceljs'
 import { Parser } from 'json2csv'
 import { Model } from 'mongoose'
-import { EnvService } from 'src/env/env.service'
+import { EnvService } from '@/infra/env/env.service'
 import { Weather } from './schemas/weather.schema'
 
 @Injectable()

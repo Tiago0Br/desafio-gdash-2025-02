@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { CryptographyModule } from 'src/cryptography/cryptography.module'
+import { CryptographyModule } from '@/infra/cryptography/cryptography.module'
 import { AuthenticateController } from './authenticate.controller'
 import { CreateUserController } from './create-user.controller'
 import { DeleteUserController } from './delete-user.controller'

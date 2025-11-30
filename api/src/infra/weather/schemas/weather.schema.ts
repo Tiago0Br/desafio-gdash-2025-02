@@ -6,25 +6,25 @@ export type WeatherDocument = HydratedDocument<Weather>
 @Schema()
 export class Weather {
   @Prop({ required: true })
-  city: string
+  city!: string
 
   @Prop({ required: true })
-  temperature: number
+  temperature!: number
 
   @Prop({ required: true })
-  humidity: number
+  humidity!: number
 
   @Prop({ required: true })
-  windSpeed: number
+  windSpeed!: number
 
   @Prop({ required: true })
-  weatherCode: number
+  weatherCode!: number
 
   @Prop({ required: true })
-  rainProbability: number
+  rainProbability!: number
 
   @Prop({ required: true })
-  collectedAt: string
+  collectedAt!: string
 }
 
 export const WeatherSchema = SchemaFactory.createForClass(Weather)

@@ -1,7 +1,7 @@
 import { Controller, Get, Query, Res } from '@nestjs/common'
 import type { Response } from 'express'
-import { ZodValidationPipe } from 'src/http/pipes/zod-validation.pipe'
 import z from 'zod'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { WeatherService } from './weather.service'
 
 const defaultLimit = 1000 // set default limit to 1000 records

@@ -1,6 +1,6 @@
 import { Controller, Delete, Param } from '@nestjs/common'
-import { ZodValidationPipe } from 'src/http/pipes/zod-validation.pipe'
 import z from 'zod'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { UserService } from './user.service'
 
 const idSchema = z.string()

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
-import { EnvModule } from 'src/env/env.module'
+import { EnvModule } from '@/infra/env/env.module'
 import { CreateWeatherRecordsController } from './create-weather-records.controller'
 import { ExportWeatherDataCsvController } from './export-weather-data-csv.controller'
 import { ExportWeatherDataXlsxController } from './export-weather-data-xlsx.controller'

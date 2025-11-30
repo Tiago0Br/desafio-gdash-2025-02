@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common'
-import { ZodValidationPipe } from 'src/http/pipes/zod-validation.pipe'
 import z from 'zod'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { WeatherService } from './weather.service'
 
 const getWeatherLogsQuerySchema = z.object({
