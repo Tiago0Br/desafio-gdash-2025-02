@@ -1,22 +1,16 @@
-import { Controller, Delete, HttpCode, NotFoundException, Param } from '@nestjs/common'
-import z from 'zod'
+import { Controller, Delete, HttpCode, NotFoundException } from '@nestjs/common'
 import { DeleteUserUseCase } from '@/domain/users/use-cases/delete-user'
-import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
+import { CurrentUser } from '@/infra/auth/current-user-decorator'
+import type { UserPayload } from '@/infra/auth/jwt.strategy'
 
-const idSchema = z.string()
-
-type DeleteUserIdSchema = z.infer<typeof idSchema>
-
-const idValidationPipe = new ZodValidationPipe(idSchema)
-
-@Controller('/api/users/:id')
+@Controller('/api/users')
 export class DeleteUserController {
   constructor(private readonly deleteUser: DeleteUserUseCase) {}
 
   @Delete()
   @HttpCode(204)
-  async handle(@Param('id', idValidationPipe) id: DeleteUserIdSchema) {
-    const result = await this.deleteUser.execute({ id })
+  async handle(@CurrentUser() { sub: loggedUserId }: UserPayload) {
+    const result = await this.deleteUser.execute({ id: loggedUserId })
 
     if (result.isLeft()) {
       const error = result.value

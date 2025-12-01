@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Either, left, right } from '@/core/either'
 import { Hasher } from '../cryptography/hasher'
 import { User } from '../entities/user'
+import { UserAlreadyExistsError } from '../errors/user-already-exists-error'
 import { UserNotFoundError } from '../errors/user-not-found-error'
 import { UserRepository } from '../repositories/user-repository'
 
@@ -12,7 +13,9 @@ interface UpdateUserUseCaseRequest {
   password: string
 }
 
-type UpdateUserUseCaseResponse = Promise<Either<UserNotFoundError, { user: User }>>
+type UpdateUserUseCaseResponse = Promise<
+  Either<UserNotFoundError | UserAlreadyExistsError, { user: User }>
+>
 
 @Injectable()
 export class UpdateUserUseCase {
@@ -31,6 +34,14 @@ export class UpdateUserUseCase {
 
     if (!user) {
       return left(new UserNotFoundError(id))
+    }
+
+    if (email !== user.email) {
+      const emailAlreadyExists = await this.userRepository.findByEmail(email)
+
+      if (emailAlreadyExists) {
+        return left(new UserAlreadyExistsError(email))
+      }
     }
 
     user.update({

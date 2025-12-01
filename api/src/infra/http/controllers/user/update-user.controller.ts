@@ -1,6 +1,15 @@
-import { Body, Controller, NotFoundException, Param, Put } from '@nestjs/common'
+import {
+  Body,
+  ConflictException,
+  Controller,
+  NotFoundException,
+  Put
+} from '@nestjs/common'
 import z from 'zod'
+import { UserNotFoundError } from '@/domain/users/errors/user-not-found-error'
 import { UpdateUserUseCase } from '@/domain/users/use-cases/update-user'
+import { CurrentUser } from '@/infra/auth/current-user-decorator'
+import type { UserPayload } from '@/infra/auth/jwt.strategy'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { UserPresenter } from '@/infra/http/presenters/user-presenter'
 
@@ -10,33 +19,34 @@ const updateUserBodySchema = z.object({
   password: z.string()
 })
 
-const idSchema = z.string()
-
 type UpdateUserBodySchema = z.infer<typeof updateUserBodySchema>
-type UpdateUserIdSchema = z.infer<typeof idSchema>
 
 const bodyValidationPipe = new ZodValidationPipe(updateUserBodySchema)
-const idValidationPipe = new ZodValidationPipe(idSchema)
 
-@Controller('/api/users/:id')
+@Controller('/api/users')
 export class UpdateUserController {
   constructor(private readonly updateUser: UpdateUserUseCase) {}
 
   @Put()
   async handle(
-    @Body(bodyValidationPipe) { name, email, password }: UpdateUserBodySchema,
-    @Param('id', idValidationPipe) id: UpdateUserIdSchema
+    @CurrentUser() { sub: loggedUserId }: UserPayload,
+    @Body(bodyValidationPipe) { name, email, password }: UpdateUserBodySchema
   ) {
     const result = await this.updateUser.execute({
-      id,
+      id: loggedUserId,
       name,
       email,
       password
     })
 
     if (result.isLeft()) {
-      const error = result.value
-      throw new NotFoundException(error.message)
+      const message = result.value.message
+      switch (result.value.constructor) {
+        case UserNotFoundError:
+          throw new NotFoundException(message)
+        default:
+          throw new ConflictException(message)
+      }
     }
 
     const { user } = result.value

@@ -1,6 +1,5 @@
 @baseUrl = http://localhost:3000/api
 @token = {{authenticate.response.body.access_token}}
-@accountId = {{create_account.response.body.user.id}}
 
 # @name create_account
 POST {{baseUrl}}/users
@@ -32,7 +31,7 @@ Authorization: Bearer {{token}}
 ###
 
 # @name update_account
-PUT {{baseUrl}}/users/{{accountId}}
+PUT {{baseUrl}}/users
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -45,7 +44,7 @@ Authorization: Bearer {{token}}
 ###
 
 # @name delete_account
-DELETE {{baseUrl}}/users/{{accountId}}
+DELETE {{baseUrl}}/users
 Authorization: Bearer {{token}}
 
 ###
