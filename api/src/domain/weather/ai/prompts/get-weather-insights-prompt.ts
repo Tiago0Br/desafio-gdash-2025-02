@@ -12,7 +12,7 @@ export function getWeatherInsightsPrompt({
 }: GetWeatherInsightsPromptParams) {
   return `
       Atue como um analista de dados climáticos e saúde.
-      Analise os dados abaixo da cidade de ${mostRecentLog.city}.
+      Analise os dados abaixo da cidade/região de ${mostRecentLog.city}.
 
       ${
         weeklyStats
@@ -21,6 +21,8 @@ export function getWeatherInsightsPrompt({
       - Média Temperatura: ${weeklyStats.avgTemperature.toFixed(1)}°C
       - Mínima da semana: ${weeklyStats.minTemperature}°C / Máxima: ${weeklyStats.maxTemperature}°C
       - Média Umidade: ${weeklyStats.avgHumidity.toFixed(1)}%
+      - Velocidade máxima do Vento: ${weeklyStats.maxWindSpeed.toFixed(1)} km/h
+      - Probabilidade de chuva: ${weeklyStats.avgRainProbability.toFixed(1)}%
       `
           : ''
       }
@@ -29,6 +31,8 @@ export function getWeatherInsightsPrompt({
       - Temperatura: ${mostRecentLog.temperature}°C
       - Umidade: ${mostRecentLog.humidity}%
       - Chuva: ${mostRecentLog.rainProbability}%
+      - Velocidade do Vento: ${mostRecentLog.windSpeed.toFixed(1)} km/h
+      - Atualizado em: ${mostRecentLog.collectedAt}
 
       Gere um resumo curto contendo:
       ${weeklyStats ? '- Uma comparação rápida do clima atual com a média dos últimos 7 dias (ex: se está mais quente ou frio que o normal).\n' : ''}
