@@ -8,7 +8,9 @@ export const envSchema = z.object({
   MONGO_PASSWORD: z.string(),
   MONGO_PORT: z.string(),
   MONGO_HOST: z.string(),
-  GENAI_API_KEY: z.string()
+  GENAI_API_KEY: z.string(),
+  DEFAULT_USER_EMAIL: z.string().optional(),
+  DEFAULT_USER_PASSWORD: z.string().optional()
 })
 
 export type Env = z.infer<typeof envSchema>
