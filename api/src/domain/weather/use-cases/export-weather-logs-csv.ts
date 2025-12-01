@@ -8,9 +8,7 @@ interface ExportWeatherLogsCsvUseCaseRequest {
   offset: number
 }
 
-type ExportWeatherLogsCsvUseCaseResponse = Promise<
-  Either<null, { csv: string }>
->
+type ExportWeatherLogsCsvUseCaseResponse = Promise<Either<null, { csv: string }>>
 
 @Injectable()
 export class ExportWeatherLogsCsvUseCase {

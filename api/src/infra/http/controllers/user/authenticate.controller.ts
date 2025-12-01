@@ -19,9 +19,7 @@ export class AuthenticateController {
 
   @Public()
   @Post()
-  async handle(
-    @Body(zodValidationPipe) { email, password }: AuthenticationBodySchema
-  ) {
+  async handle(@Body(zodValidationPipe) { email, password }: AuthenticationBodySchema) {
     const result = await this.authenticate.execute({ email, password })
 
     if (result.isLeft()) {

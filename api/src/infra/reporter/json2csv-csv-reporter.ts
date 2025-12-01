@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Parser } from 'json2csv'
-import {
-  CsvReporter,
-  CsvReporterData
-} from '@/domain/weather/reporter/csv-reporter'
+import { CsvReporter, CsvReporterData } from '@/domain/weather/reporter/csv-reporter'
 
 @Injectable()
 export class Json2CsvCsvReporter implements CsvReporter {

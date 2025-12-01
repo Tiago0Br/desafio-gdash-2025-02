@@ -3,9 +3,7 @@ import { GetWeatherAiInsightsUseCase } from '@/domain/weather/use-cases/get-weat
 
 @Controller('/api/weather/insights')
 export class GetWeatherAiInsightsController {
-  constructor(
-    private getWeatherAiInsightsUseCase: GetWeatherAiInsightsUseCase
-  ) {}
+  constructor(private getWeatherAiInsightsUseCase: GetWeatherAiInsightsUseCase) {}
 
   @Get()
   async handle() {

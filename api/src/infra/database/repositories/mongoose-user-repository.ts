@@ -9,9 +9,7 @@ import { MongooseUserMapper } from '../mappers/mongoose-user-mapper'
 
 @Injectable()
 export class MongooseUserRepository implements UserRepository {
-  constructor(
-    @InjectModel(UserModel.name) private userModel: Model<UserModel>
-  ) {}
+  constructor(@InjectModel(UserModel.name) private userModel: Model<UserModel>) {}
 
   async create(user: User): Promise<void> {
     await this.userModel.create(MongooseUserMapper.toMongoose(user))

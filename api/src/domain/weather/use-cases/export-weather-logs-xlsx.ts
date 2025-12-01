@@ -8,9 +8,7 @@ interface ExportWeatherLogsXlsxUseCaseRequest {
   offset: number
 }
 
-type ExportWeatherLogsXlsxUseCaseResponse = Promise<
-  Either<null, { xlsxBuffer: Buffer }>
->
+type ExportWeatherLogsXlsxUseCaseResponse = Promise<Either<null, { xlsxBuffer: Buffer }>>
 
 @Injectable()
 export class ExportWeatherLogsXlsxUseCase {

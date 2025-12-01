@@ -18,9 +18,7 @@ export class GetWeatherLogsController {
   constructor(private readonly getWeatherLogs: GetWeatherLogsUseCase) {}
 
   @Get()
-  async handle(
-    @Query(zodValidationPipe) { limit, offset }: GetWeatherLogsQuerySchema
-  ) {
+  async handle(@Query(zodValidationPipe) { limit, offset }: GetWeatherLogsQuerySchema) {
     const result = await this.getWeatherLogs.execute({ limit, offset })
 
     const weatherLogs = result.value?.weatherLogs ?? []

@@ -7,9 +7,7 @@ interface SaveWeatherLogsUseCaseRequest {
   weather: Weather
 }
 
-type SaveWeatherLogsUseCaseResponse = Promise<
-  Either<null, { weather: Weather }>
->
+type SaveWeatherLogsUseCaseResponse = Promise<Either<null, { weather: Weather }>>
 
 @Injectable()
 export class SaveWeatherLogsUseCase {

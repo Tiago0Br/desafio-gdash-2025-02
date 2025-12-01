@@ -8,9 +8,7 @@ interface DeleteUserUseCaseRequest {
   id: string
 }
 
-type DeleteUserUseCaseResponse = Promise<
-  Either<UserNotFoundError, { user: User }>
->
+type DeleteUserUseCaseResponse = Promise<Either<UserNotFoundError, { user: User }>>
 
 @Injectable()
 export class DeleteUserUseCase {

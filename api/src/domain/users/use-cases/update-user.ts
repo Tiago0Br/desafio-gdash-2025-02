@@ -12,9 +12,7 @@ interface UpdateUserUseCaseRequest {
   password: string
 }
 
-type UpdateUserUseCaseResponse = Promise<
-  Either<UserNotFoundError, { user: User }>
->
+type UpdateUserUseCaseResponse = Promise<Either<UserNotFoundError, { user: User }>>
 
 @Injectable()
 export class UpdateUserUseCase {

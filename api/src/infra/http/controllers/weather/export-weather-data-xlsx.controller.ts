@@ -11,27 +11,18 @@ const exportWeatherLogsXlsxQuerySchema = z.object({
   offset: z.coerce.number().default(0)
 })
 
-type ExportWeatherLogsXlsxQuerySchema = z.infer<
-  typeof exportWeatherLogsXlsxQuerySchema
->
+type ExportWeatherLogsXlsxQuerySchema = z.infer<typeof exportWeatherLogsXlsxQuerySchema>
 
-const zodValidationPipe = new ZodValidationPipe(
-  exportWeatherLogsXlsxQuerySchema
-)
+const zodValidationPipe = new ZodValidationPipe(exportWeatherLogsXlsxQuerySchema)
 
 @Controller('/api/weather/export/xlsx')
 export class ExportWeatherLogsXlsxController {
-  constructor(
-    private readonly exportWeatherLogsXlsx: ExportWeatherLogsXlsxUseCase
-  ) {}
+  constructor(private readonly exportWeatherLogsXlsx: ExportWeatherLogsXlsxUseCase) {}
 
   @Get()
   async handle(
     @Res() res: Response,
-    @Query(zodValidationPipe) {
-      limit,
-      offset
-    }: ExportWeatherLogsXlsxQuerySchema
+    @Query(zodValidationPipe) { limit, offset }: ExportWeatherLogsXlsxQuerySchema
   ) {
     const result = await this.exportWeatherLogsXlsx.execute({ limit, offset })
     const outputFileName = `weather_logs_${new Date().toISOString()}.xlsx`
@@ -43,8 +34,7 @@ export class ExportWeatherLogsXlsxController {
     const { xlsxBuffer } = result.value
 
     res.set({
-      'Content-Type':
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': `attachment; filename="${outputFileName}"`,
       'Content-Length': xlsxBuffer.length.toString()
     })

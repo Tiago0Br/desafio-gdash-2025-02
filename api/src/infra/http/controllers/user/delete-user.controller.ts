@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Delete,
-  HttpCode,
-  NotFoundException,
-  Param
-} from '@nestjs/common'
+import { Controller, Delete, HttpCode, NotFoundException, Param } from '@nestjs/common'
 import z from 'zod'
 import { DeleteUserUseCase } from '@/domain/users/use-cases/delete-user'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'

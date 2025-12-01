@@ -11,17 +11,13 @@ const exportWeatherLogsCsvQuerySchema = z.object({
   offset: z.coerce.number().default(0)
 })
 
-type ExportWeatherLogsCsvQuerySchema = z.infer<
-  typeof exportWeatherLogsCsvQuerySchema
->
+type ExportWeatherLogsCsvQuerySchema = z.infer<typeof exportWeatherLogsCsvQuerySchema>
 
 const zodValidationPipe = new ZodValidationPipe(exportWeatherLogsCsvQuerySchema)
 
 @Controller('/api/weather/export/csv')
 export class ExportWeatherLogsCsvController {
-  constructor(
-    private readonly exportWeatherLogsCsv: ExportWeatherLogsCsvUseCase
-  ) {}
+  constructor(private readonly exportWeatherLogsCsv: ExportWeatherLogsCsvUseCase) {}
 
   @Get()
   async handle(

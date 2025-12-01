@@ -18,9 +18,7 @@ export class FindAllUsersController {
   constructor(private readonly findAllUsers: FindAllUsersUseCase) {}
 
   @Get()
-  async handle(
-    @Query(zodValidationPipe) { limit, offset }: FindAllUsersQuerySchema
-  ) {
+  async handle(@Query(zodValidationPipe) { limit, offset }: FindAllUsersQuerySchema) {
     const result = await this.findAllUsers.execute({ limit, offset })
 
     const users = result.value?.users ?? []

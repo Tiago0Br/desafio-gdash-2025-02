@@ -15,9 +15,7 @@ const createWeatherRecordsBodySchema = z.object({
   collected_at: z.string()
 })
 
-type CreateWeatherRecordsBodySchema = z.infer<
-  typeof createWeatherRecordsBodySchema
->
+type CreateWeatherRecordsBodySchema = z.infer<typeof createWeatherRecordsBodySchema>
 
 const zodValidationPipe = new ZodValidationPipe(createWeatherRecordsBodySchema)
 

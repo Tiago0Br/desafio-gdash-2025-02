@@ -11,9 +11,7 @@ interface CreateUserUseCaseRequest {
   password: string
 }
 
-type CreateUserUseCaseResponse = Promise<
-  Either<UserAlreadyExistsError, { user: User }>
->
+type CreateUserUseCaseResponse = Promise<Either<UserAlreadyExistsError, { user: User }>>
 
 @Injectable()
 export class CreateUserUseCase {

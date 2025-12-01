@@ -6,9 +6,7 @@ import { WeatherRepository } from '../repositories/weather-repository'
 
 type GetWeatherLogsUseCaseRequest = PaginationParams
 
-type GetWeatherLogsUseCaseResponse = Promise<
-  Either<null, { weatherLogs: Weather[] }>
->
+type GetWeatherLogsUseCaseResponse = Promise<Either<null, { weatherLogs: Weather[] }>>
 
 @Injectable()
 export class GetWeatherLogsUseCase {

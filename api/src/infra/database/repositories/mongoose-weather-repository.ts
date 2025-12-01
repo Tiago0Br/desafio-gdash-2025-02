@@ -50,10 +50,7 @@ export class MongooseWeatherRepository implements WeatherRepository {
   }
 
   async findMostRecent(): Promise<Weather | null> {
-    const weather = await this.weatherModel
-      .findOne()
-      .sort({ collectedAt: -1 })
-      .exec()
+    const weather = await this.weatherModel.findOne().sort({ collectedAt: -1 }).exec()
 
     return weather ? MongooseWeatherMapper.toDomain(weather) : null
   }
