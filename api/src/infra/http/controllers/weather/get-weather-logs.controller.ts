@@ -2,7 +2,7 @@ import { Controller, Get, Query } from '@nestjs/common'
 import z from 'zod'
 import { GetWeatherLogsUseCase } from '@/domain/weather/use-cases/get-weather-logs'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
-import { WeatherPresenter } from '../../presenters/weather-presenter'
+import { WeatherPresenter } from '@/infra/http/presenters/weather-presenter'
 
 const getWeatherLogsQuerySchema = z.object({
   limit: z.coerce.number().min(1).max(20).default(20),

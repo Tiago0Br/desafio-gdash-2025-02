@@ -14,6 +14,7 @@ type Config struct {
 	RabbitMQPort     string
 	RabbitMQQueue    string
 	ApiUrl           string
+	ApiToken         string
 }
 
 func Load() (*Config, error) {
@@ -26,10 +27,15 @@ func Load() (*Config, error) {
 		RabbitMQPort:     os.Getenv("RABBITMQ_PORT"),
 		RabbitMQQueue:    os.Getenv("RABBITMQ_QUEUE"),
 		ApiUrl:           os.Getenv("API_URL"),
+		ApiToken:         os.Getenv("WORKER_API_TOKEN"),
 	}
 
 	if cfg.RabbitMQUser == "" || cfg.RabbitMQPassword == "" || cfg.RabbitMQHost == "" || cfg.RabbitMQPort == "" || cfg.RabbitMQQueue == "" {
 		return nil, fmt.Errorf("missing required RabbitMQ environment variables")
+	}
+
+	if cfg.ApiUrl == "" || cfg.ApiToken == "" {
+		return nil, fmt.Errorf("missing required API environment variables")
 	}
 
 	return cfg, nil

@@ -1,5 +1,5 @@
-import { Weather } from '../../entities/weather'
-import { WeatherWeeklyStats } from '../../repositories/weather-repository'
+import { Weather } from '@/domain/weather/entities/weather'
+import { WeatherWeeklyStats } from '@/domain/weather/repositories/weather-repository'
 
 interface GetWeatherInsightsPromptParams {
   mostRecentLog: Weather

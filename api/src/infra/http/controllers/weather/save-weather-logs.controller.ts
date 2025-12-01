@@ -1,7 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Post, UseGuards } from '@nestjs/common'
 import z from 'zod'
 import { Weather } from '@/domain/weather/entities/weather'
 import { SaveWeatherLogsUseCase } from '@/domain/weather/use-cases/save-weather-logs'
+import { WorkerAuthGuard } from '@/infra/auth/guards/worker-auth.guard'
 import { Public } from '@/infra/auth/public'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 
@@ -24,6 +25,7 @@ export class SaveWeatherLogsController {
   constructor(private readonly saveWeatherLogs: SaveWeatherLogsUseCase) {}
 
   @Public()
+  @UseGuards(WorkerAuthGuard)
   @Post()
   async handle(@Body(zodValidationPipe) body: CreateWeatherRecordsBodySchema) {
     const weather = Weather.create({

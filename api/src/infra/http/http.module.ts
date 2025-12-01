@@ -12,6 +12,7 @@ import { SaveWeatherLogsUseCase } from '@/domain/weather/use-cases/save-weather-
 import { AiModule } from '../ai/ai.module'
 import { CryptographyModule } from '../cryptography/cryptography.module'
 import { DatabaseModule } from '../database/database.module'
+import { EnvModule } from '../env/env.module'
 import { ReporterModule } from '../reporter/reporter.module'
 import { AuthenticateController } from './controllers/user/authenticate.controller'
 import { CreateUserController } from './controllers/user/create-user.controller'
@@ -25,7 +26,7 @@ import { GetWeatherLogsController } from './controllers/weather/get-weather-logs
 import { SaveWeatherLogsController } from './controllers/weather/save-weather-logs.controller'
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, ReporterModule, AiModule],
+  imports: [DatabaseModule, CryptographyModule, ReporterModule, AiModule, EnvModule],
   controllers: [
     AuthenticateController,
     CreateUserController,

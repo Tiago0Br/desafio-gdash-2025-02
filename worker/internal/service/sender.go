@@ -18,12 +18,14 @@ const (
 )
 
 type WeatherSender struct {
-	ApiUrl string
+	ApiUrl   string
+	ApiToken string
 }
 
-func NewWeatherSender(apiUrl string) *WeatherSender {
+func NewWeatherSender(apiUrl, apiToken string) *WeatherSender {
 	return &WeatherSender{
-		ApiUrl: apiUrl,
+		ApiUrl:   apiUrl,
+		ApiToken: apiToken,
 	}
 }
 
@@ -32,12 +34,26 @@ func (s *WeatherSender) Send(data domain.WeatherData) error {
 		return fmt.Errorf("API_URL not set")
 	}
 
+	if s.ApiToken == "" {
+		return fmt.Errorf("WORKER_API_TOKEN not set")
+	}
+
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		return fmt.Errorf("failed to marshal data: %w", err)
 	}
 
-	res, err := http.Post(s.ApiUrl+"/weather", "application/json", bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest("POST", s.ApiUrl+"/weather", bytes.NewBuffer(jsonData))
+	if err != nil {
+		return fmt.Errorf("failed to create request: %w", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("x-api-key", s.ApiToken)
+
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		return fmt.Errorf("failed to request API: %w", err)
 	}

@@ -3,7 +3,7 @@ import z from 'zod'
 import { CreateUserUseCase } from '@/domain/users/use-cases/create-user'
 import { Public } from '@/infra/auth/public'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
-import { UserPresenter } from '../../presenters/user-presenter'
+import { UserPresenter } from '@/infra/http/presenters/user-presenter'
 
 const createUserBodySchema = z.object({
   name: z.string(),

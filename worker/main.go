@@ -14,7 +14,7 @@ func main() {
 		log.Fatalf("Failed to load config: %s", err)
 	}
 
-	sender := service.NewWeatherSender(cfg.ApiUrl)
+	sender := service.NewWeatherSender(cfg.ApiUrl, cfg.ApiToken)
 	consumer := queue.NewRabbitMQConsumer(cfg, sender)
 
 	log.Println("Starting worker...")
