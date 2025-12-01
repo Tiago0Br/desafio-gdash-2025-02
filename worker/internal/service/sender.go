@@ -43,7 +43,7 @@ func (s *WeatherSender) Send(data domain.WeatherData) error {
 		return fmt.Errorf("failed to marshal data: %w", err)
 	}
 
-	req, err := http.NewRequest("POST", s.ApiUrl+"/weather", bytes.NewBuffer(jsonData))
+	req, err := http.NewRequest("POST", s.ApiUrl+"/api/weather", bytes.NewBuffer(jsonData))
 	if err != nil {
 		return fmt.Errorf("failed to create request: %w", err)
 	}

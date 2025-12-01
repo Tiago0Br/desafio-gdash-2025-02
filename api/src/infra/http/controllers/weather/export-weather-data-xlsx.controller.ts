@@ -15,7 +15,7 @@ type ExportWeatherLogsXlsxQuerySchema = z.infer<typeof exportWeatherLogsXlsxQuer
 
 const zodValidationPipe = new ZodValidationPipe(exportWeatherLogsXlsxQuerySchema)
 
-@Controller('/api/weather/export/xlsx')
+@Controller('/weather/export/xlsx')
 export class ExportWeatherLogsXlsxController {
   constructor(private readonly exportWeatherLogsXlsx: ExportWeatherLogsXlsxUseCase) {}
 

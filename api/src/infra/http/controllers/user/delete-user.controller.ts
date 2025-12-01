@@ -3,7 +3,7 @@ import { DeleteUserUseCase } from '@/domain/users/use-cases/delete-user'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import type { UserPayload } from '@/infra/auth/jwt.strategy'
 
-@Controller('/api/users')
+@Controller('/users')
 export class DeleteUserController {
   constructor(private readonly deleteUser: DeleteUserUseCase) {}
 

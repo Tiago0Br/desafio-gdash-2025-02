@@ -13,7 +13,7 @@ type FindAllUsersQuerySchema = z.infer<typeof findAllUsersQuerySchema>
 
 const zodValidationPipe = new ZodValidationPipe(findAllUsersQuerySchema)
 
-@Controller('/api/users')
+@Controller('/users')
 export class FindAllUsersController {
   constructor(private readonly findAllUsers: FindAllUsersUseCase) {}
 

@@ -15,7 +15,7 @@ type ExportWeatherLogsCsvQuerySchema = z.infer<typeof exportWeatherLogsCsvQueryS
 
 const zodValidationPipe = new ZodValidationPipe(exportWeatherLogsCsvQuerySchema)
 
-@Controller('/api/weather/export/csv')
+@Controller('/weather/export/csv')
 export class ExportWeatherLogsCsvController {
   constructor(private readonly exportWeatherLogsCsv: ExportWeatherLogsCsvUseCase) {}
 

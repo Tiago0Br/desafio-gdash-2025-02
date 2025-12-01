@@ -13,7 +13,7 @@ type GetWeatherLogsQuerySchema = z.infer<typeof getWeatherLogsQuerySchema>
 
 const zodValidationPipe = new ZodValidationPipe(getWeatherLogsQuerySchema)
 
-@Controller('/api/weather/logs')
+@Controller('/weather/logs')
 export class GetWeatherLogsController {
   constructor(private readonly getWeatherLogs: GetWeatherLogsUseCase) {}
 

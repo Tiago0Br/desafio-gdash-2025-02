@@ -23,7 +23,7 @@ type UpdateUserBodySchema = z.infer<typeof updateUserBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(updateUserBodySchema)
 
-@Controller('/api/users')
+@Controller('/users')
 export class UpdateUserController {
   constructor(private readonly updateUser: UpdateUserUseCase) {}
 

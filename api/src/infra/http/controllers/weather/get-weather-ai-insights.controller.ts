@@ -1,7 +1,7 @@
 import { ConflictException, Controller, Get } from '@nestjs/common'
 import { GetWeatherAiInsightsUseCase } from '@/domain/weather/use-cases/get-weather-ai-insights'
 
-@Controller('/api/weather/insights')
+@Controller('/weather/insights')
 export class GetWeatherAiInsightsController {
   constructor(private getWeatherAiInsightsUseCase: GetWeatherAiInsightsUseCase) {}
 

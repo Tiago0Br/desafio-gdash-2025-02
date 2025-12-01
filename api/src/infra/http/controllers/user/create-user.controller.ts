@@ -15,7 +15,7 @@ type CreateUserBodySchema = z.infer<typeof createUserBodySchema>
 
 const bodyValidationPipe = new ZodValidationPipe(createUserBodySchema)
 
-@Controller('/api/users')
+@Controller('/users')
 export class CreateUserController {
   constructor(private createUser: CreateUserUseCase) {}
 

@@ -13,7 +13,7 @@ type AuthenticationBodySchema = z.infer<typeof authenticationBodySchema>
 
 const zodValidationPipe = new ZodValidationPipe(authenticationBodySchema)
 
-@Controller('/api/auth')
+@Controller('/auth')
 export class AuthenticateController {
   constructor(private readonly authenticate: AuthenticateUseCase) {}
 
