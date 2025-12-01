@@ -4,7 +4,7 @@ import { Model } from 'mongoose'
 import { PaginationParams } from '@/core/types/pagination-params'
 import { User } from '@/domain/users/entities/user'
 import { UserRepository } from '@/domain/users/repositories/user-repository'
-import { User as UserModel } from '@/infra/database/schemas/user.schema'
+import { UserModel } from '@/infra/database/schemas/user.schema'
 import { MongooseUserMapper } from '../mappers/mongoose-user-mapper'
 
 @Injectable()

@@ -2,7 +2,7 @@ import { Body, Controller, NotFoundException, Param, Put } from '@nestjs/common'
 import z from 'zod'
 import { UpdateUserUseCase } from '@/domain/users/use-cases/update-user'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
-import { UserPresenter } from '../presenters/user-presenter'
+import { UserPresenter } from '../../presenters/user-presenter'
 
 const updateUserBodySchema = z.object({
   name: z.string(),

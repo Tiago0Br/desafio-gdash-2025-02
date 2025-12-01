@@ -2,7 +2,7 @@ import { Controller, Get, Query } from '@nestjs/common'
 import z from 'zod'
 import { FindAllUsersUseCase } from '@/domain/users/use-cases/find-all-users'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
-import { UserPresenter } from '../presenters/user-presenter'
+import { UserPresenter } from '../../presenters/user-presenter'
 
 const findAllUsersQuerySchema = z.object({
   limit: z.number().default(20),

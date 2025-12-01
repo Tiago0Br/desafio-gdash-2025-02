@@ -1,7 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common'
 import z from 'zod'
+import { GetWeatherLogsUseCase } from '@/domain/weather/use-cases/get-weather-logs'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
-import { WeatherService } from './weather.service'
+import { WeatherPresenter } from '../../presenters/weather-presenter'
 
 const getWeatherLogsQuerySchema = z.object({
   limit: z.coerce.number().min(1).max(20).default(20),
@@ -14,14 +15,18 @@ const zodValidationPipe = new ZodValidationPipe(getWeatherLogsQuerySchema)
 
 @Controller('/api/weather/logs')
 export class GetWeatherLogsController {
-  constructor(private readonly weatherService: WeatherService) {}
+  constructor(private readonly getWeatherLogs: GetWeatherLogsUseCase) {}
 
   @Get()
   async handle(
     @Query(zodValidationPipe) { limit, offset }: GetWeatherLogsQuerySchema
   ) {
-    const weatherLogs = await this.weatherService.findAll(limit, offset)
+    const result = await this.getWeatherLogs.execute({ limit, offset })
 
-    return weatherLogs
+    const weatherLogs = result.value?.weatherLogs ?? []
+
+    return {
+      data: weatherLogs.map(WeatherPresenter.present)
+    }
   }
 }

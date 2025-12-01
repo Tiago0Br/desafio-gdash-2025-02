@@ -1,8 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common'
 import z from 'zod'
+import { Weather } from '@/domain/weather/entities/weather'
+import { SaveWeatherLogsUseCase } from '@/domain/weather/use-cases/save-weather-logs'
 import { Public } from '@/infra/auth/public'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
-import { WeatherService } from './weather.service'
 
 const createWeatherRecordsBodySchema = z.object({
   city: z.string(),
@@ -21,13 +22,13 @@ type CreateWeatherRecordsBodySchema = z.infer<
 const zodValidationPipe = new ZodValidationPipe(createWeatherRecordsBodySchema)
 
 @Controller('/weather')
-export class CreateWeatherRecordsController {
-  constructor(private readonly weatherService: WeatherService) {}
+export class SaveWeatherLogsController {
+  constructor(private readonly saveWeatherLogs: SaveWeatherLogsUseCase) {}
 
   @Public()
   @Post()
   async handle(@Body(zodValidationPipe) body: CreateWeatherRecordsBodySchema) {
-    await this.weatherService.create({
+    const weather = Weather.create({
       city: body.city,
       temperature: body.temperature,
       humidity: body.humidity,
@@ -37,8 +38,10 @@ export class CreateWeatherRecordsController {
       collectedAt: body.collected_at
     })
 
+    await this.saveWeatherLogs.execute({ weather })
+
     return {
-      message: 'Weather records created successfully'
+      message: 'Weather logs saved successfully'
     }
   }
 }
