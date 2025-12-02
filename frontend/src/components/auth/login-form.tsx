@@ -32,7 +32,7 @@ export function LoginForm() {
     }
   })
 
-  const { mutateAsync: loginRequest } = useMutation({
+  const { mutateAsync: loginRequest, isPending } = useMutation({
     mutationFn: () => login(loginForm.getValues()),
     onSuccess: (data) => {
       updateLoggedUser({
@@ -85,7 +85,7 @@ export function LoginForm() {
               </div>
             )}
           />
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" disabled={isPending}>
             Acessar Dashboard
           </Button>
         </div>

@@ -1,5 +1,4 @@
-import { isAxiosError } from 'axios'
-import type { ApiError } from '@/types'
+import { getMessageByApiError } from '@/utils/get-message-by-api-error'
 import { api } from '../lib/axios'
 
 interface LoginRequestBody {
@@ -25,13 +24,6 @@ export async function login({ email, password }: LoginRequestBody) {
 
     return response.data
   } catch (error) {
-    if (isAxiosError(error) && error.response?.data) {
-      const errorData = error.response.data as ApiError
-      if (errorData.statusCode === 401) {
-        throw new Error('Credenciais inválidas')
-      }
-    }
-
-    throw new Error('Erro ao fazer login')
+    throw new Error(getMessageByApiError(error))
   }
 }

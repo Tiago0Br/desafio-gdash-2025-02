@@ -1,6 +1,5 @@
-import { isAxiosError } from 'axios'
 import { api } from '@/lib/axios'
-import type { ApiError } from '@/types'
+import { getMessageByApiError } from '@/utils/get-message-by-api-error'
 
 interface RegisterRequestBody {
   name: string
@@ -26,13 +25,6 @@ export async function register({ name, email, password }: RegisterRequestBody) {
 
     return response.data.user
   } catch (error) {
-    if (isAxiosError(error) && error.response?.data) {
-      const errorData = error.response.data as ApiError
-      if (errorData.statusCode === 400) {
-        throw new Error('E-mail já cadastrado!')
-      }
-    }
-
-    throw new Error('Erro ao registrar usuário')
+    throw new Error(getMessageByApiError(error))
   }
 }
