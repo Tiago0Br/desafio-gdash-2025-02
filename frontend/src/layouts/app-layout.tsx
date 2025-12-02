@@ -1,9 +1,8 @@
-import { useContext } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { AuthContext } from '@/contexts/auth-context'
+import { useAuth } from '@/hooks/use-auth'
 
 export function AppLayout() {
-  const { loggedUser } = useContext(AuthContext)
+  const { loggedUser } = useAuth()
 
   if (!loggedUser) {
     return <Navigate to="/auth" />
