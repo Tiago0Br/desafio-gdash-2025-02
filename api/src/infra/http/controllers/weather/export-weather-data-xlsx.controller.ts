@@ -2,6 +2,7 @@ import { ConflictException, Controller, Get, Query, Res } from '@nestjs/common'
 import type { Response } from 'express'
 import z from 'zod'
 import { ExportWeatherLogsXlsxUseCase } from '@/domain/weather/use-cases/export-weather-logs-xlsx'
+import { ERROR_CODES } from '@/infra/http/error-codes'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 
 const defaultLimit = 1000 // set default limit to 1000 records
@@ -28,7 +29,9 @@ export class ExportWeatherLogsXlsxController {
     const outputFileName = `weather_logs_${new Date().toISOString()}.xlsx`
 
     if (result.isLeft()) {
-      throw new ConflictException('Failed to generate XLSX file')
+      throw new ConflictException('Failed to generate XLSX file', {
+        description: ERROR_CODES.couldNotGenerateFile
+      })
     }
 
     const { xlsxBuffer } = result.value

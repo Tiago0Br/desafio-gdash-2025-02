@@ -2,6 +2,7 @@ import { ConflictException, Controller, Get, Query, Res } from '@nestjs/common'
 import type { Response } from 'express'
 import z from 'zod'
 import { ExportWeatherLogsCsvUseCase } from '@/domain/weather/use-cases/export-weather-logs-csv'
+import { ERROR_CODES } from '@/infra/http/error-codes'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 
 const defaultLimit = 1000 // set default limit to 1000 records
@@ -28,7 +29,9 @@ export class ExportWeatherLogsCsvController {
     const outputFilename = `weather_logs_${new Date().toISOString()}.csv`
 
     if (result.isLeft()) {
-      throw new ConflictException('Failed to generate CSV file')
+      throw new ConflictException('Failed to generate CSV file', {
+        description: ERROR_CODES.couldNotGenerateFile
+      })
     }
 
     const { csv } = result.value

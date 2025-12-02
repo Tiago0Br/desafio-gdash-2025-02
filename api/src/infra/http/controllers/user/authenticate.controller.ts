@@ -2,6 +2,7 @@ import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common'
 import { z } from 'zod'
 import { AuthenticateUseCase } from '@/domain/users/use-cases/authenticate'
 import { Public } from '@/infra/auth/public'
+import { ERROR_CODES } from '@/infra/http/error-codes'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { UserPresenter } from '@/infra/http/presenters/user-presenter'
 
@@ -25,7 +26,9 @@ export class AuthenticateController {
 
     if (result.isLeft()) {
       const error = result.value
-      throw new UnauthorizedException(error.message)
+      throw new UnauthorizedException(error.message, {
+        description: ERROR_CODES.invalidCredentials
+      })
     }
 
     const { token, user } = result.value

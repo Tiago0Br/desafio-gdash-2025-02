@@ -10,6 +10,7 @@ import { UserNotFoundError } from '@/domain/users/errors/user-not-found-error'
 import { UpdateUserUseCase } from '@/domain/users/use-cases/update-user'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import type { UserPayload } from '@/infra/auth/jwt.strategy'
+import { ERROR_CODES } from '@/infra/http/error-codes'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { UserPresenter } from '@/infra/http/presenters/user-presenter'
 
@@ -43,9 +44,13 @@ export class UpdateUserController {
       const message = result.value.message
       switch (result.value.constructor) {
         case UserNotFoundError:
-          throw new NotFoundException(message)
+          throw new NotFoundException(message, {
+            description: ERROR_CODES.userNotFound
+          })
         default:
-          throw new ConflictException(message)
+          throw new ConflictException(message, {
+            description: ERROR_CODES.userAlreadyExists
+          })
       }
     }
 

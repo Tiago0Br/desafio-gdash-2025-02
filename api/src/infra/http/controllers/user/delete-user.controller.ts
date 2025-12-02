@@ -2,6 +2,7 @@ import { Controller, Delete, HttpCode, NotFoundException } from '@nestjs/common'
 import { DeleteUserUseCase } from '@/domain/users/use-cases/delete-user'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import type { UserPayload } from '@/infra/auth/jwt.strategy'
+import { ERROR_CODES } from '@/infra/http/error-codes'
 
 @Controller('/users')
 export class DeleteUserController {
@@ -14,7 +15,9 @@ export class DeleteUserController {
 
     if (result.isLeft()) {
       const error = result.value
-      throw new NotFoundException(error.message)
+      throw new NotFoundException(error.message, {
+        description: ERROR_CODES.userNotFound
+      })
     }
   }
 }
