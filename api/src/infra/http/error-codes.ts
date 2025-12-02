@@ -3,5 +3,6 @@ export const ERROR_CODES = {
   userAlreadyExists: 'USER_ALREADY_EXISTS',
   userNotFound: 'USER_NOT_FOUND',
   couldNotGenerateFile: 'COULD_NOT_GENERATE_FILE',
-  aiResponseNotAvailable: 'AI_RESPONSE_NOT_AVAILABLE'
+  aiResponseNotAvailable: 'AI_RESPONSE_NOT_AVAILABLE',
+  onlyWorkerCanAccess: 'ONLY_WORKER_CAN_ACCESS'
 }

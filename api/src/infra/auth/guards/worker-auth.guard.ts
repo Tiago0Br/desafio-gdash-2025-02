@@ -5,6 +5,7 @@ import {
   UnauthorizedException
 } from '@nestjs/common'
 import { EnvService } from '@/infra/env/env.service'
+import { ERROR_CODES } from '@/infra/http/error-codes'
 
 @Injectable()
 export class WorkerAuthGuard implements CanActivate {
@@ -17,7 +18,9 @@ export class WorkerAuthGuard implements CanActivate {
     const validToken = this.envService.get('WORKER_API_TOKEN')
 
     if (!apiToken || apiToken !== validToken) {
-      throw new UnauthorizedException('Access allowed only for worker')
+      throw new UnauthorizedException('Access allowed only for worker', {
+        description: ERROR_CODES.onlyWorkerCanAccess
+      })
     }
 
     return true
