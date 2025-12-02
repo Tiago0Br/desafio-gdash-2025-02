@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { Toaster } from 'sonner'
 import { App } from './app'
+import { AuthContextProvider } from './contexts/auth-context'
 import { queryClient } from './lib/query-client'
 
 const rootElement = document.getElementById('root')
@@ -14,7 +15,9 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
       <Toaster position="top-center" richColors closeButton />
     </QueryClientProvider>
   </StrictMode>

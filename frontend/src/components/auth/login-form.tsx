@@ -1,9 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { AuthContext } from '@/contexts/auth-context'
 import { login } from '@/http/login'
+import { getFirstName } from '@/utils/get-first-name'
 import { Button } from '../ui/button'
 import { Form, FormField, FormMessage } from '../ui/form'
 import { Input } from '../ui/input'
@@ -17,6 +21,9 @@ const loginSchema = z.object({
 type LoginSchemaType = z.infer<typeof loginSchema>
 
 export function LoginForm() {
+  const { updateLoggedUser } = useContext(AuthContext)
+  const navigate = useNavigate()
+
   const loginForm = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -27,8 +34,15 @@ export function LoginForm() {
 
   const { mutateAsync: loginRequest } = useMutation({
     mutationFn: () => login(loginForm.getValues()),
-    onSuccess: () => {
-      toast.success('Login realizado com sucesso')
+    onSuccess: (data) => {
+      updateLoggedUser({
+        id: data.user.id,
+        name: data.user.name,
+        email: data.user.email,
+        token: data.access_token
+      })
+      toast.success(`Seja bem-vindo(a), ${getFirstName(data.user.name)}!`)
+      navigate('/')
     },
     onError: (error) => {
       toast.error(error.message)

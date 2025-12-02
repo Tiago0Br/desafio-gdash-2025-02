@@ -8,7 +8,12 @@ interface LoginRequestBody {
 }
 
 interface LoginResponse {
-  token: string
+  access_token: string
+  user: {
+    id: string
+    name: string
+    email: string
+  }
 }
 
 export async function login({ email, password }: LoginRequestBody) {
@@ -18,7 +23,7 @@ export async function login({ email, password }: LoginRequestBody) {
       password
     })
 
-    return response.data.token
+    return response.data
   } catch (error) {
     if (isAxiosError(error) && error.response?.data) {
       const errorData = error.response.data as ApiError
