@@ -1,6 +1,7 @@
 import { CloudSun } from 'lucide-react'
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { LoginForm } from '@/components/auth/login-form'
+import { RegisterForm } from '@/components/auth/register-form'
 import {
   Card,
   CardContent,
@@ -9,15 +10,13 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export function AuthPage() {
   const [activeTab, setActiveTab] = useState('login')
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-100 to-slate-200 p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-2">
@@ -43,51 +42,11 @@ export function AuthPage() {
             </TabsList>
 
             <TabsContent value="login">
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="admin@exemplo.com"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Senha</Label>
-                    <Input id="password" type="password" />
-                  </div>
-                  <Button className="w-full" type="submit">
-                    Acessar Dashboard
-                  </Button>
-                </div>
-              </form>
+              <LoginForm />
             </TabsContent>
 
             <TabsContent value="register">
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nome Completo</Label>
-                    <Input id="name" placeholder="João Silva" />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="new-email">Email</Label>
-                    <Input
-                      id="new-email"
-                      type="email"
-                      placeholder="seu@email.com"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="new-password">Senha</Label>
-                    <Input id="new-password" type="password" />
-                  </div>
-                  <Button className="w-full" type="submit">
-                    Criar Conta Grátis
-                  </Button>
-                </div>
-              </form>
+              <RegisterForm />
             </TabsContent>
           </Tabs>
         </CardContent>
