@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { AuthenticateUseCase } from '@/domain/users/use-cases/authenticate'
 import { Public } from '@/infra/auth/public'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
+import { UserPresenter } from '@/infra/http/presenters/user-presenter'
 
 const authenticationBodySchema = z.object({
   email: z.email(),
@@ -27,10 +28,11 @@ export class AuthenticateController {
       throw new UnauthorizedException(error.message)
     }
 
-    const { token } = result.value
+    const { token, user } = result.value
 
     return {
-      access_token: token
+      access_token: token,
+      user: UserPresenter.present(user)
     }
   }
 }

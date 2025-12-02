@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { Either, left, right } from '@/core/either'
 import { Encrypter } from '../cryptography/encrypter'
 import { Hasher } from '../cryptography/hasher'
+import { User } from '../entities/user'
 import { InvalidCredentialsError } from '../errors/invalid-credentials-error'
 import { UserRepository } from '../repositories/user-repository'
 
@@ -11,7 +12,7 @@ interface AuthenticateUseCaseRequest {
 }
 
 type AuthenticateUseCaseResponse = Promise<
-  Either<InvalidCredentialsError, { token: string }>
+  Either<InvalidCredentialsError, { token: string; user: User }>
 >
 
 @Injectable()
@@ -42,6 +43,6 @@ export class AuthenticateUseCase {
       sub: user.id
     })
 
-    return right({ token })
+    return right({ token, user })
   }
 }
