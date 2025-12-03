@@ -1,17 +1,10 @@
 import { createContext, useState } from 'react'
-import { LocalStorage } from '@/lib/local-storage'
-
-interface User {
-  token: string
-  id: string
-  name: string
-  email: string
-}
+import { LocalStorage, type StoredUserData } from '@/lib/local-storage'
 
 interface AuthContextProps {
-  loggedUser: User | null
-  getLoggedUser: () => User
-  updateLoggedUser: (user: User) => void
+  loggedUser: StoredUserData | null
+  getLoggedUser: () => StoredUserData
+  updateLoggedUser: (user: StoredUserData) => void
   logout: () => void
 }
 
@@ -23,7 +16,7 @@ export const AuthContext = createContext<AuthContextProps>(
   {} as AuthContextProps
 )
 
-function validateUserData(data: unknown): data is User {
+function validateUserData(data: unknown): data is StoredUserData {
   if (!data || typeof data !== 'object') return false
   const user = data as Record<string, unknown>
   return (
@@ -35,13 +28,12 @@ function validateUserData(data: unknown): data is User {
 }
 
 export const AuthContextProvider = ({ children }: AuthProviderProps) => {
-  const [loggedUser, setLoggedUser] = useState<User | null>(() => {
+  const [loggedUser, setLoggedUser] = useState<StoredUserData | null>(() => {
     const storedUser = LocalStorage.getUser()
 
     if (!storedUser) return null
 
-    const parsedUser = JSON.parse(storedUser)
-    return validateUserData(parsedUser) ? parsedUser : null
+    return validateUserData(storedUser) ? storedUser : null
   })
 
   const getLoggedUser = () => {
@@ -49,7 +41,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
     return loggedUser
   }
 
-  const updateLoggedUser = (user: User) => {
+  const updateLoggedUser = (user: StoredUserData) => {
     setLoggedUser(user)
     LocalStorage.setUser(user)
   }

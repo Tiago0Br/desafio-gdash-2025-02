@@ -1,23 +1,11 @@
-import {
-  CloudRain,
-  Download,
-  Droplets,
-  Sparkles,
-  ThermometerSun,
-  Wind
-} from 'lucide-react'
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis
-} from 'recharts'
+import { useMutation } from '@tanstack/react-query'
+import { CloudRain, Droplets, ThermometerSun, Wind } from 'lucide-react'
+import { AiInsighsCard } from '@/components/dashboard/ai-insights-card'
+import { ExportReportButton } from '@/components/dashboard/export-report-button'
 import { KpiCard } from '@/components/dashboard/kpi-card'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { TemperatureHistoryCard } from '@/components/dashboard/temperature-history-card'
+import { getCsvReporter } from '@/http/get-csv-reporter'
+import { getXlsxReporter } from '@/http/get-xlsx-reporter'
 
 const mockData = [
   { time: '10:00', temp: 22 },
@@ -30,114 +18,80 @@ const mockData = [
 ]
 
 export function DashboardPage() {
+  const {
+    mutateAsync: getCsvReporterRequest,
+    isPending: isLoadingCsvReporter
+  } = useMutation({
+    mutationFn: getCsvReporter
+  })
+
+  const {
+    mutateAsync: getXlsxReporterRequest,
+    isPending: isLoadingXlsxReporter
+  } = useMutation({
+    mutationFn: getXlsxReporter
+  })
+
   return (
     <main className="p-6 space-y-8 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <div className="flex items-center gap-2">
-          <Button>
-            <Download className="mr-2 size-4" />
-            Exportar XLSX
-          </Button>
-          <Button>
-            <Download className="mr-2 size-4" />
-            Exportar CSV
-          </Button>
+          <ExportReportButton
+            reportType="xlsx"
+            getContentFn={() => getXlsxReporterRequest()}
+            disabled={isLoadingXlsxReporter}
+          />
+          <ExportReportButton
+            reportType="csv"
+            getContentFn={() => getCsvReporterRequest()}
+            disabled={isLoadingCsvReporter}
+          />
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <KpiCard
-          title="Temperatura"
-          value="24°C"
-          sub="Sensação de 26°C"
-          icon={<ThermometerSun className="size-4 text-orange-500" />}
-        />
-        <KpiCard
-          title="Umidade"
-          value="62%"
-          sub="+2% na última hora"
-          icon={<Droplets className="size-4 text-blue-500" />}
-        />
-        <KpiCard
-          title="Vento"
-          value="12 km/h"
-          sub="Direção: Sudeste"
-          icon={<Wind className="size-4 text-slate-500" />}
-        />
-        <KpiCard
-          title="Chuva"
-          value="15%"
-          sub="Probabilidade baixa"
-          icon={<CloudRain className="size-4 text-cyan-500" />}
-        />
+      <div>
+        <div className="flex justify-between">
+          <span className="text-sm">
+            Região: <strong className="font-semibold">Americana/SP</strong>
+          </span>
+          <span className="text-sm">
+            Atualizado em:{' '}
+            <strong className="font-semibold">12/03/2025 11:44</strong>
+          </span>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <KpiCard
+            title="Temperatura"
+            value="24°C"
+            sub="Sensação de 26°C"
+            icon={<ThermometerSun className="size-4 text-orange-500" />}
+          />
+          <KpiCard
+            title="Umidade"
+            value="62%"
+            sub="+2% na última hora"
+            icon={<Droplets className="size-4 text-blue-500" />}
+          />
+          <KpiCard
+            title="Vento"
+            value="12 km/h"
+            sub="Direção: Sudeste"
+            icon={<Wind className="size-4 text-slate-500" />}
+          />
+          <KpiCard
+            title="Chuva"
+            value="15%"
+            sub="Probabilidade baixa"
+            icon={<CloudRain className="size-4 text-cyan-500" />}
+          />
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-7">
-        <Card className="col-span-4 shadow-sm">
-          <CardHeader>
-            <CardTitle>Histórico de Temperatura (Hoje)</CardTitle>
-          </CardHeader>
-          <CardContent className="pl-2">
-            <div className="h-[300px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={mockData}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis
-                    dataKey="time"
-                    stroke="#888888"
-                    fontSize={12}
-                    tickLine={false}
-                    axisLine={false}
-                  />
-                  <YAxis
-                    stroke="#888888"
-                    fontSize={12}
-                    tickLine={false}
-                    axisLine={false}
-                    tickFormatter={(value) => `${value}°C`}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#fff',
-                      borderRadius: '8px'
-                    }}
-                    itemStyle={{ color: '#000' }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="temp"
-                    stroke="#2563eb"
-                    strokeWidth={2}
-                    dot={{ r: 4, fill: '#2563eb' }}
-                    activeDot={{ r: 8 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+        <TemperatureHistoryCard data={mockData} />
 
-        <Card className="col-span-3 shadow-sm border-indigo-100 bg-linear-to-br from-white to-indigo-50/50">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-md font-medium text-indigo-700">
-              WeatherStack AI Analyst
-            </CardTitle>
-            <Sparkles className="h-5 w-5 text-indigo-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="mt-4 space-y-4">
-              <div className="p-4 bg-white/60 backdrop-blur rounded-lg border border-indigo-100 text-sm text-slate-700 leading-relaxed">
-                "A temperatura atual de 24°C está <strong>2 graus acima</strong>{' '}
-                da média da semana. Recomendação: O clima está seco, leve uma
-                garrafa de água se for sair para correr."
-              </div>
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white">
-                Gerar nova análise
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <AiInsighsCard />
       </div>
     </main>
   )
