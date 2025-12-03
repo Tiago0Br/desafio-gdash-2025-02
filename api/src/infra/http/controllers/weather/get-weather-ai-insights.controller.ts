@@ -20,8 +20,6 @@ export class GetWeatherAiInsightsController {
 
     const { insights } = result.value
 
-    return {
-      insights
-    }
+    return insights
   }
 }

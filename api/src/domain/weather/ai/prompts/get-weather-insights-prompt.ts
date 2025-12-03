@@ -42,5 +42,9 @@ export function getWeatherInsightsPrompt({
       - Seja breve e objetivo (sem saudações);
       - Use os dados que foram fornecidos;
       - Seja educado, formal, mas mantenha uma linguagem que seja acessível (sem jargões ou termos técnicos).
+
+      A resposta deve seguir a seguinte estrutura:
+      - analysis: Análise do clima atual em comparação com a média dos últimos 7 dias;
+      - recommendation: Recomendação de saúde baseada nas condições atuais.
     `
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Either, left, right } from '@/core/either'
-import { AiAgent } from '../ai/ai-agent'
+import { AiAgent, type OutputData } from '../ai/ai-agent'
 import { getWeatherInsightsPrompt } from '../ai/prompts/get-weather-insights-prompt'
 import { AiResponseNotAvailableError } from '../errors/ai-response-not-available-error'
 import { InsuficientDataForAiInsightsError } from '../errors/insuficient-data-for-ai-insights-error'
@@ -9,7 +9,7 @@ import { WeatherRepository } from '../repositories/weather-repository'
 type GetWeatherAiInsightsUseCaseResponse = Promise<
   Either<
     InsuficientDataForAiInsightsError | AiResponseNotAvailableError,
-    { insights: string }
+    { insights: OutputData }
   >
 >
 
