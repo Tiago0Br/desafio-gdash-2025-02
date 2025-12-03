@@ -10,6 +10,7 @@ interface User {
 
 interface AuthContextProps {
   loggedUser: User | null
+  getLoggedUser: () => User
   updateLoggedUser: (user: User) => void
   logout: () => void
 }
@@ -43,6 +44,11 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
     return validateUserData(parsedUser) ? parsedUser : null
   })
 
+  const getLoggedUser = () => {
+    if (!loggedUser) throw new Error('There is no logged user')
+    return loggedUser
+  }
+
   const updateLoggedUser = (user: User) => {
     setLoggedUser(user)
     LocalStorage.setUser(user)
@@ -54,7 +60,9 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ loggedUser, updateLoggedUser, logout }}>
+    <AuthContext.Provider
+      value={{ loggedUser, getLoggedUser, updateLoggedUser, logout }}
+    >
       {children}
     </AuthContext.Provider>
   )
