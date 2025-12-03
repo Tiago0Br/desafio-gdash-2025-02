@@ -44,7 +44,7 @@ export class GenAIAgent implements AiAgent {
       return undefined
     }
 
-    const data = JSON.parse(result.text) as OutputData
-    return data
+    const data = JSON.parse(result.text) as OutputData[]
+    return data[0]
   }
 }
