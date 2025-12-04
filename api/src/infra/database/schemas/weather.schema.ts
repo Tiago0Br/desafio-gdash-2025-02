@@ -9,9 +9,6 @@ export class WeatherModel {
   _id!: string
 
   @Prop({ required: true })
-  city!: string
-
-  @Prop({ required: true })
   temperature!: number
 
   @Prop({ required: true })
@@ -19,9 +16,6 @@ export class WeatherModel {
 
   @Prop({ required: true })
   windSpeed!: number
-
-  @Prop({ required: true })
-  weatherCode!: number
 
   @Prop({ required: true })
   rainProbability!: number

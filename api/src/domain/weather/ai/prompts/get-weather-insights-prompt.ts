@@ -12,7 +12,7 @@ export function getWeatherInsightsPrompt({
 }: GetWeatherInsightsPromptParams) {
   return `
       Atue como um analista de dados climáticos e saúde.
-      Analise os dados abaixo da cidade/região de ${mostRecentLog.city}.
+      Analise os dados abaixo climáticos abaixo:
 
       ${
         weeklyStats

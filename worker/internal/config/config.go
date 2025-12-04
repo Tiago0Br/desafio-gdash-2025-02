@@ -26,7 +26,7 @@ func Load() (*Config, error) {
 		RabbitMQHost:     os.Getenv("RABBITMQ_HOST"),
 		RabbitMQPort:     os.Getenv("RABBITMQ_PORT"),
 		RabbitMQQueue:    os.Getenv("RABBITMQ_QUEUE"),
-		ApiUrl:           os.Getenv("API_URL"),
+		ApiUrl:           os.Getenv("VITE_API_URL"),
 		ApiToken:         os.Getenv("WORKER_API_TOKEN"),
 	}
 

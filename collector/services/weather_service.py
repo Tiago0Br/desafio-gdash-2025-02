@@ -4,10 +4,10 @@ from typing import Optional, Dict, Any
 
 logger = logging.getLogger(__name__)
 
-def get_weather_data(api_url: str, region_name: str) -> Optional[Dict[str, Any]]:
+def get_weather_data(api_url: str) -> Optional[Dict[str, Any]]:
   """Fetch weather data from Open-Meteo API"""
   try:
-    logger.info(f"Fetching weather data for {region_name} from {api_url}")
+    logger.info(f"Fetching weather data from {api_url}")
     response = requests.get(api_url)
     response.raise_for_status()
     data = response.json()
@@ -23,11 +23,9 @@ def get_weather_data(api_url: str, region_name: str) -> Optional[Dict[str, Any]]
       rain_probability = hourly['precipitation_probability'][index]
 
     payload = {
-      "city": region_name,
       "temperature": current.get('temperature_2m'),
       "humidity": current.get('relative_humidity_2m'),
       "wind_speed": current.get('wind_speed_10m'),
-      "weather_code": current.get('weather_code'),
       "rain_probability": rain_probability,
       "collected_at": current_time_iso
     }

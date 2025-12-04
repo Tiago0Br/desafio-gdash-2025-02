@@ -9,11 +9,9 @@ export class MongooseWeatherMapper {
   static toMongoose(weather: Weather): WeatherModel {
     return {
       _id: weather.id,
-      city: weather.city,
       temperature: weather.temperature,
       humidity: weather.humidity,
       windSpeed: weather.windSpeed,
-      weatherCode: weather.weatherCode,
       rainProbability: weather.rainProbability,
       collectedAt: weather.collectedAt
     }

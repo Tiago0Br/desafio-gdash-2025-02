@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def job():
   """Job to collect weather data"""
   logger.info("Collecting weather data...")
-  weather_data = get_weather_data(config.OPENMETEO_URL, config.REGION_NAME)
+  weather_data = get_weather_data(config.OPENMETEO_URL)
 
   if weather_data:
     try:
