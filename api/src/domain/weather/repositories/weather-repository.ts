@@ -17,7 +17,7 @@ export abstract class WeatherRepository {
 
   abstract findAll(params: PaginationParams): Promise<Weather[]>
 
-  abstract findAllInArray(params: PaginationParams): Promise<unknown[]>
+  abstract findAllInArray(params: PaginationParams): Promise<any[]>
 
   abstract findMostRecent(): Promise<Weather | null>
 

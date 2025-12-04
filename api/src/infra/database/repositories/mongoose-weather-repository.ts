@@ -37,7 +37,7 @@ export class MongooseWeatherRepository implements WeatherRepository {
     return weather.map(MongooseWeatherMapper.toDomain)
   }
 
-  async findAllInArray(params: PaginationParams): Promise<unknown[]> {
+  async findAllInArray(params: PaginationParams): Promise<any[]> {
     const weather = await this.weatherModel
       .find()
       .sort({ collectedAt: -1 })

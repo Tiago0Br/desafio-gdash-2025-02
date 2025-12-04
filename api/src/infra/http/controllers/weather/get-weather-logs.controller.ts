@@ -23,12 +23,6 @@ export class GetWeatherLogsController {
 
     const weatherLogs = result.value?.weatherLogs ?? []
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true)
-      }, 6000)
-    })
-
     return {
       data: weatherLogs.map(WeatherPresenter.present)
     }

@@ -24,9 +24,17 @@ import { ExportWeatherLogsCsvController } from './controllers/weather/export-wea
 import { GetWeatherAiInsightsController } from './controllers/weather/get-weather-ai-insights.controller'
 import { GetWeatherLogsController } from './controllers/weather/get-weather-logs.controller'
 import { SaveWeatherLogsController } from './controllers/weather/save-weather-logs.controller'
+import { DateModule } from '../date/date.module'
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, ReporterModule, AiModule, EnvModule],
+  imports: [
+    DatabaseModule,
+    CryptographyModule,
+    ReporterModule,
+    AiModule,
+    EnvModule,
+    DateModule
+  ],
   controllers: [
     AuthenticateController,
     CreateUserController,
