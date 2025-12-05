@@ -1,6 +1,7 @@
 import { Download } from 'lucide-react'
 import type { ButtonHTMLAttributes } from 'react'
 import { Button } from '../ui/button'
+import dayjs from 'dayjs'
 
 interface ExportReportButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -28,7 +29,7 @@ export function ExportReportButton({
     const link = document.createElement('a')
     link.href = url
 
-    const fileName = `relatorio_clima_${new Date().toISOString().split('T')[0]}.${reportType}`
+    const fileName = `relatorio_clima_${dayjs().format('DD-MM-YYYY_HH-mm')}.${reportType}`
     link.setAttribute('download', fileName)
 
     document.body.appendChild(link)

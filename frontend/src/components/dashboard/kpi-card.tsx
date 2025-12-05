@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 interface KpiCardProps {
   title: string
   value: string
-  sub: string
+  sub: string | null
   icon: React.ReactNode
 }
 
@@ -16,7 +16,7 @@ export function KpiCard({ title, value, sub, icon }: KpiCardProps) {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
-        <p className="text-xs text-muted-foreground">{sub}</p>
+        {sub && <p className="text-xs text-muted-foreground">{sub}</p>}
       </CardContent>
     </Card>
   )

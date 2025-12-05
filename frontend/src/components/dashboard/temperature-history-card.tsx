@@ -20,7 +20,7 @@ export function TemperatureHistoryCard({ data }: TemperatureHistoryCardProps) {
   return (
     <Card className="col-span-4 shadow-sm">
       <CardHeader>
-        <CardTitle>Histórico de Temperatura (Hoje)</CardTitle>
+        <CardTitle>Histórico de Temperatura</CardTitle>
       </CardHeader>
       <CardContent className="pl-2">
         <div className="h-[300px] w-full">

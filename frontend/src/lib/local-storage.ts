@@ -1,4 +1,5 @@
 const USER_STORAGE_KEY = '@weather-stack:user'
+const AI_INSIGHTS_STORAGE_KEY = '@weather-stack:ai-insights'
 
 export interface StoredUserData {
   token: string
@@ -25,5 +26,19 @@ export const LocalStorage = {
 
   removeUser: () => {
     localStorage.removeItem(USER_STORAGE_KEY)
+  },
+
+  setAiInsights: (insights: string) => {
+    localStorage.setItem(AI_INSIGHTS_STORAGE_KEY, insights)
+  },
+
+  getAiInsights: () => {
+    const storedInsights = localStorage.getItem(AI_INSIGHTS_STORAGE_KEY)
+
+    if (!storedInsights) {
+      return null
+    }
+
+    return storedInsights
   }
 }
