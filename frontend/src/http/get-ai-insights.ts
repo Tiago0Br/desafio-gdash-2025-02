@@ -1,4 +1,5 @@
 import { api } from '@/lib/axios'
+import { getMessageByApiError } from '@/utils/get-message-by-api-error'
 
 interface GetAiInsightsResponse {
   analysis: string
@@ -6,7 +7,11 @@ interface GetAiInsightsResponse {
 }
 
 export async function getAiInsights() {
-  const response = await api.get<GetAiInsightsResponse>('/weather/insights')
+  try {
+    const response = await api.get<GetAiInsightsResponse>('/weather/insights')
 
-  return response.data
+    return response.data
+  } catch (error) {
+    throw new Error(getMessageByApiError(error))
+  }
 }
