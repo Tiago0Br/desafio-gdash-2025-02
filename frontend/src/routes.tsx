@@ -4,6 +4,7 @@ import { AuthPage } from './pages/auth'
 import { DashboardPage } from './pages/dashboard'
 import { UsersPage } from './pages/users'
 import { UpdateUserPage } from './pages/update-user'
+import { NotFoundPage } from './pages/not-found'
 
 export const routes = createBrowserRouter([
   {
@@ -27,5 +28,9 @@ export const routes = createBrowserRouter([
   {
     path: '/auth',
     element: <AuthPage />
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />
   }
 ])
