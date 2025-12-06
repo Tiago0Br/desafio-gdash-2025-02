@@ -80,12 +80,12 @@ function getInsight(
   weatherData: WeatherData[],
   field: 'humidity' | 'windSpeed' | 'temperature'
 ): string | null {
-  const currentValue = weatherData[0][field]
-  const previousValue = weatherData[1][field]
-
-  if (!currentValue || !previousValue) {
+  if (!weatherData[0] || !weatherData[1]) {
     return null
   }
+
+  const currentValue = weatherData[0][field]
+  const previousValue = weatherData[1][field]
 
   let percentage: number
   let description: string

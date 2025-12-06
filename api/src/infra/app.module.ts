@@ -11,8 +11,7 @@ import { HttpModule } from './http/http.module'
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      validate: (config) => envSchema.parse(config),
-      envFilePath: '../.env'
+      validate: (config) => envSchema.parse(config)
     }),
     MongooseModule.forRootAsync({
       imports: [EnvModule],

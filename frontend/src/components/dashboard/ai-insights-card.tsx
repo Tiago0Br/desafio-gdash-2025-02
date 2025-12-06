@@ -14,7 +14,6 @@ interface AiInsightsCardProps {
 export function AiInsighsCard({ disabled }: AiInsightsCardProps) {
   const [typedText, setTypedText] = useState(() => {
     const storedInsights = LocalStorage.getAiInsights()
-    console.log(storedInsights)
 
     if (!storedInsights) {
       return ''

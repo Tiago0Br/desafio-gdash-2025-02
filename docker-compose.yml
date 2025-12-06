@@ -12,6 +12,11 @@ services:
       - mongo_data:/data/db
     networks:
       - app-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
   broker:
     image: rabbitmq:3.13.7-management
     container_name: weather_broker
@@ -22,16 +27,67 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  api:
+    build: ./api
+    container_name: weather_api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+      broker:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+        VITE_REGION_NAME: ${VITE_REGION_NAME}
+    container_name: weather_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    networks:
+      - app-network
+
+  collector:
+    build: ./collector
+    container_name: weather_collector
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      broker:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  worker:
+    build: ./worker
+    container_name: weather_worker
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      broker:
+        condition: service_healthy
+      api:
+        condition: service_started
     networks:
       - app-network
 
 volumes:
   mongo_data:
-    driver: local
-  rabbitmq_data:
-    driver: local
 
 networks:
   app-network:
