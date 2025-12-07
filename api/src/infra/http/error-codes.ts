@@ -4,5 +4,6 @@ export const ERROR_CODES = {
   userNotFound: 'USER_NOT_FOUND',
   couldNotGenerateFile: 'COULD_NOT_GENERATE_FILE',
   aiResponseNotAvailable: 'AI_RESPONSE_NOT_AVAILABLE',
-  onlyWorkerCanAccess: 'ONLY_WORKER_CAN_ACCESS'
+  onlyWorkerCanAccess: 'ONLY_WORKER_CAN_ACCESS',
+  starWarsApiUnavailable: 'STAR_WARS_API_UNAVAILABLE'
 }

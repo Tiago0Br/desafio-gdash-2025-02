@@ -25,6 +25,9 @@ import { GetWeatherAiInsightsController } from './controllers/weather/get-weathe
 import { GetWeatherLogsController } from './controllers/weather/get-weather-logs.controller'
 import { SaveWeatherLogsController } from './controllers/weather/save-weather-logs.controller'
 import { DateModule } from '../date/date.module'
+import { ProviderModule } from '../provider/provider.module'
+import { FindAllCharactersController } from './controllers/star-wars/find-all-characters.controller'
+import { FindAllCharactersUseCase } from '@/domain/star-wars/use-cases/find-all-characters'
 
 @Module({
   imports: [
@@ -33,7 +36,8 @@ import { DateModule } from '../date/date.module'
     ReporterModule,
     AiModule,
     EnvModule,
-    DateModule
+    DateModule,
+    ProviderModule
   ],
   controllers: [
     AuthenticateController,
@@ -45,7 +49,8 @@ import { DateModule } from '../date/date.module'
     GetWeatherLogsController,
     ExportWeatherLogsCsvController,
     ExportWeatherLogsXlsxController,
-    GetWeatherAiInsightsController
+    GetWeatherAiInsightsController,
+    FindAllCharactersController
   ],
   providers: [
     AuthenticateUseCase,
@@ -57,7 +62,8 @@ import { DateModule } from '../date/date.module'
     GetWeatherLogsUseCase,
     ExportWeatherLogsCsvUseCase,
     ExportWeatherLogsXlsxUseCase,
-    GetWeatherAiInsightsUseCase
+    GetWeatherAiInsightsUseCase,
+    FindAllCharactersUseCase
   ]
 })
 export class HttpModule {}
