@@ -47,8 +47,9 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   }
 
   const logout = () => {
-    setLoggedUser(null)
     LocalStorage.removeUser()
+    LocalStorage.removeAiInsights()
+    setLoggedUser(null)
   }
 
   return (

@@ -40,5 +40,9 @@ export const LocalStorage = {
     }
 
     return storedInsights
+  },
+
+  removeAiInsights: () => {
+    localStorage.removeItem(AI_INSIGHTS_STORAGE_KEY)
   }
 }

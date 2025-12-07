@@ -1,7 +1,7 @@
 import { Gauge, LogOut, MenuIcon, ThermometerSun, User } from 'lucide-react'
 import { Button } from './ui/button'
 import { useAuth } from '@/hooks/use-auth'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { getFirstName } from '@/utils/get-first-name'
 import {
   DropdownMenu,
@@ -14,12 +14,19 @@ import {
 
 export function Header() {
   const { loggedUser, logout } = useAuth()
+  const navigate = useNavigate()
 
   if (!loggedUser) {
-    return <Navigate to="/auth" />
+    return <Navigate to="/auth" replace />
+  }
+
+  function handleLogout() {
+    logout()
+    navigate('/auth', { replace: true })
   }
 
   return (
+
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b bg-zinc-800 px-6 shadow-sm">
       <div className="flex items-center gap-2 font-bold text-xl text-primary">
         <ThermometerSun className="h-6 w-6" />
@@ -47,7 +54,7 @@ export function Header() {
         <span className="block text-sm text-muted-foreground">
           Olá, {getFirstName(loggedUser.name)}
         </span>
-        <Button variant="outline" size="icon" onClick={logout}>
+        <Button variant="outline" size="icon" onClick={handleLogout}>
           <LogOut className="size-4" />
         </Button>
       </div>
@@ -72,7 +79,7 @@ export function Header() {
               <a href="/users">Users</a>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout}>Sair</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Sair</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

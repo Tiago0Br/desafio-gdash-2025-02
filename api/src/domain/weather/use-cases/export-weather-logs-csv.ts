@@ -39,8 +39,11 @@ export class ExportWeatherLogsCsvUseCase {
     const csv = this.csvReporter.generate({
       columns,
       rows: weatherLogsArray.map((current) => ({
-        ...current,
-        collectedAt: this.dateFormatter.format(current.collectedAt)
+        temperatura: current.temperature,
+        umidade: current.humidity,
+        velocidade_do_vento: current.windSpeed,
+        probabilidade_de_chuva: current.rainProbability,
+        coletado_em: this.dateFormatter.format(current.collectedAt)
       }))
     })
 
