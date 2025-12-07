@@ -40,55 +40,48 @@ Sistema completo de monitoramento e análise de dados climáticos com pipeline d
 
 O WeatherStack é composto por 4 microsserviços principais que trabalham de forma integrada:
 
-```
-┌─────────────────┐
-│   Collector     │ (Python)
-│   (Python)      │
-│                 │
-│ - Coleta dados  │
-│   OpenMeteo API │
-│ - Envia para    │
-│   RabbitMQ      │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   RabbitMQ      │
-│   (Message      │
-│    Broker)      │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   Worker        │ (Go)
-│   (Go)          │
-│                 │
-│ - Consome fila  │
-│ - Envia para    │
-│   API REST      │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐      ┌─────────────────┐
-│   API           │◄─────┤   MongoDB       │
-│   (NestJS)      │      │   (Database)    │
-│                 │      └─────────────────┘
-│ - REST API      │
-│ - Auth JWT      │      ┌─────────────────┐
-│ - AI Insights   │◄─────┤   Google AI     │
-│ - Export CSV    │      │   (Gemini)      │
-└────────┬────────┘      └─────────────────┘
-         │
-         ▼
-┌─────────────────┐
-│   Frontend      │ (React)
-│   (React +      │
-│    Vite)        │
-│                 │
-│ - Dashboard     │
-│ - Auth/CRUD     │
-│ - AI Insights   │
-└─────────────────┘
+
+```mermaid
+graph TD
+    subgraph "Externo"
+        OpenMeteo[☁️ Open-Meteo API]
+        User((👤 Usuário))
+    end
+
+    subgraph "Infraestrutura Docker"
+        direction TB
+        
+        Collector[🐍 Collector]
+        Broker[🐰 RabbitMQ]
+        Worker[Worker]
+        
+        subgraph "Backend"
+            API[API]
+            Mongo[(🍃 MongoDB)]
+            Gemini[✨ Google Gemini AI]
+        end
+        
+        Frontend[⚛️ Frontend]
+    end
+
+    %% Fluxo de Coleta
+    OpenMeteo --> |JSON| Collector
+    Collector --> |Publica dados| Broker
+    Broker --> |Consume| Worker
+    Worker --> |POST /weather| API
+    API --> |Salva| Mongo
+
+    %% Fluxo de Usuário
+    User --> |HTTP / Browser| Frontend
+    Frontend --> |REST API| API
+    API <--> |Analisa Dados| Gemini
+
+    %% Estilização do Diagrama
+    style Collector fill:#3776ab,stroke:#fff,color:#fff
+    style Broker fill:#ff6600,stroke:#fff,color:#fff
+    style Worker fill:#00add8,stroke:#fff,color:#fff
+    style API fill:#e0234e,stroke:#fff,color:#fff
+    style Frontend fill:#61dafb,stroke:#333,color:#000
 ```
 
 ### Fluxo de Dados
@@ -168,7 +161,35 @@ git clone https://github.com/GDASH-io/desafio-gdash-2025-02.git
 cd desafio-gdash-2025-02
 ```
 
-### 2. Configure as Variáveis de Ambiente
+### 2. Geração das chaves públicas e privadas
+
+Crie a chave privada:
+
+```bash
+openssl genpkey -algorithm RSA -out private_key.pem -pkeyopt rsa_keygen_bits:2048
+```
+
+Crie a chave pública:
+
+```bash
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+```
+
+Converta o conteúdo das chaves no formato base64:
+
+```bash
+base64 -w 0 private_key.pem # Guarde o conteúdo para colar no .env
+base64 -w 0 public_key.pem # Guarde o conteúdo para colar no .env
+```
+
+Remova os arquivos .pem
+
+```bash
+rm private_key.pem
+rm public_key.pem
+```
+
+### 3. Configure as Variáveis de Ambiente
 
 Crie o arquivo `.env` na raíz do projeto:
 
@@ -199,8 +220,8 @@ REGION_LON=
 API_URL="http://api:3000"
 
 # API Configuration
-JWT_PRIVATE_KEY=    # Base64
-JWT_PUBLIC_KEY=     # Base64
+JWT_PRIVATE_KEY=    # Cole aqui a chave privada em Base64
+JWT_PUBLIC_KEY=     # Cole aqui a chave privada em Base64
 GENAI_API_KEY=
 WORKER_API_TOKEN=
 DEFAULT_USER_EMAIL= # Optional
@@ -211,7 +232,7 @@ VITE_API_URL=
 VITE_REGION_NAME=
 ```
 
-### 3. Inicie a Aplicação
+### 4. Inicie a Aplicação
 
 #### Usando Docker Compose (Recomendado)
 
@@ -223,19 +244,17 @@ docker-compose up -d
 make up
 ```
 
-### 4. Acesse a Aplicação
+### 5. Acesse a Aplicação
 
 - **Frontend**: [http://localhost:5173](http://localhost:80)
 - **API**: [http://localhost:3000](http://localhost:3000)
 - **RabbitMQ Management**: [http://localhost:15672](http://localhost:15672)
 - **MongoDB**: `mongodb://localhost:27017`
 
-### 5. Primeira Execução
+### 6. Primeira Execução
 
 1. Acesse o frontend em [http://localhost:5173](http://localhost:5173)
-2. Crie uma conta ou use o usuário default
-3. Faça login
-4. Acesse o dashboard para visualizar os dados climáticos
+2. Crie uma conta ou faça login utilizando o usuário default
 
 ---
 
@@ -383,7 +402,3 @@ Desenvolvido por **Tiago Tavares Lopes** como parte do processo seletivo da GDAS
 ## 🎥 Vídeo de Demonstração
 
 [https://youtu.be/tKMcNFqb0ww](https://youtu.be/tKMcNFqb0ww) - Link do vídeo
-
----
-
-**WeatherStack** - Sistema completo de monitoramento climático com IA 🌤️🤖
