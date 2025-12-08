@@ -16,7 +16,7 @@ export function AuthPage() {
   const [activeTab, setActiveTab] = useState('login')
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-100 to-slate-200 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-zinc-700 to-zinc-900 p-4">
       <Card className="w-full max-w-md shadow-lg">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-2">
