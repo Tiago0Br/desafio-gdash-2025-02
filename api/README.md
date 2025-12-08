@@ -36,12 +36,17 @@ src/
 │   │   ├── use-cases/     # Casos de uso
 │   │   ├── cryptography/  # Interfaces de criptografia
 │   │   └── errors/        # Erros de domínio
-│   └── weather/           # Domínio de dados climáticos
-│       ├── entities/      # Entidades de weather
-│       ├── repositories/  # Interfaces de repositórios
+│   |── weather/           # Domínio de dados climáticos
+│   |   ├── entities/      # Entidades de weather
+│   |   ├── repositories/  # Interfaces de repositórios
+│   |   ├── use-cases/     # Casos de uso
+│   |   ├── reporter/      # Interfaces de exportação
+│   |   ├── ai/            # Interfaces de IA
+│   |   └── errors/        # Erros de domínio
+│   └── star-wars/         # Domínio de Star Wars
+│       ├── entities/      # Entidades
+│       ├── providers/     # API externa que fornecerá as informações
 │       ├── use-cases/     # Casos de uso
-│       ├── reporter/      # Interfaces de exportação
-│       ├── ai/            # Interfaces de IA
 │       └── errors/        # Erros de domínio
 └── infra/                 # Camada de infraestrutura
     ├── http/              # Camada HTTP (controllers)
@@ -51,7 +56,8 @@ src/
     ├── ai/                # Implementação de IA
     ├── reporter/          # Implementação de exportação
     ├── env/               # Configuração de ambiente
-    └── date/              # Implementação de utilitários de data
+    |── date/              # Implementação de utilitários de data
+    └── provider/          # Provedores externos, como outras APIs
 ```
 
 ### Princípios

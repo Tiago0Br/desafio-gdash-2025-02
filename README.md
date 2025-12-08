@@ -198,38 +198,39 @@ cp .env.example .env
 ```
 
 ```bash
-# MongoDB Connection
+# Conexão do MongoDB
 MONGO_USER=
 MONGO_PASSWORD=
 MONGO_PORT=
 MONGO_HOST="weather_mongo"
 
-# RabbitMQ Connection
+# Conexão do RabbitMQ
 RABBITMQ_HOST="weather_broker"
 RABBITMQ_USER=
 RABBITMQ_PASS=
 RABBITMQ_PORT=
 RABBITMQ_QUEUE="weather_data"
 
-# Configuration for searching for weather information.
+# Configuração do coletor de dados
 COLLECTION_INTERVAL="3600" # 1 hour
 REGION_LAT=
 REGION_LON=
 
-# Worker configuration
+# Configuração do Worker
 API_URL="http://api:3000"
 
-# API Configuration
+# Configuração da API
 JWT_PRIVATE_KEY=    # Cole aqui a chave privada em Base64
 JWT_PUBLIC_KEY=     # Cole aqui a chave privada em Base64
-GENAI_API_KEY=
-WORKER_API_TOKEN=
-DEFAULT_USER_EMAIL= # Optional
-DEFAULT_USER_PASSWORD= # Optional
+GENAI_API_KEY=      # Cole aqui a API Key do Gemini
+WORKER_API_TOKEN=   # Hash qualquer
+DEFAULT_USER_EMAIL= # Opcional
+DEFAULT_USER_PASSWORD= # Opcional
+STAR_WARS_API_URL=     # API do Star Wars
 
-# Frontend Configuration
-VITE_API_URL=
-VITE_REGION_NAME=
+# Configuração do frontend
+VITE_API_URL=        # URL da API Rest
+VITE_REGION_NAME=    # Nome da cidade ou região a qual pertence à latitude e longitude
 ```
 
 ### 4. Inicie a Aplicação
@@ -264,16 +265,21 @@ make up
 desafio-gdash/
 ├── api/                      # API REST (NestJS + TypeScript)
 │   ├── src/
-│   │   ├── core/            # Utilitários e tipos base
-│   │   ├── domain/          # Lógica de negócio (DDD)
-│   │   │   ├── users/       # Domínio de usuários
-│   │   │   └── weather/     # Domínio de clima
-│   │   └── infra/           # Infraestrutura
-│   │       ├── ai/          # Integração Google AI
-│   │       ├── auth/        # Autenticação JWT
-│   │       ├── cryptography/# Hash e encriptação
-│   │       ├── database/    # Prisma + MongoDB
-│   │       └── http/        # Controllers e DTOs
+│   │   ├── core/             # Utilitários e tipos base
+│   │   ├── domain/           # Lógica de negócio (DDD)
+│   │   │   ├── users/        # Domínio de usuários
+│   │   │   |── weather/      # Domínio de clima
+|   |   |   └── star-wars/    # Domínio com informações de Star Wars
+│   │   └── infra/            # Infraestrutura
+│   │       ├── ai/           # Integração Google AI
+│   │       ├── auth/         # Autenticação JWT
+│   │       ├── cryptography/ # Hash e encriptação
+│   │       ├── database/     # Prisma + MongoDB
+│   │       ├── reporter/     # Exportação de relatórios
+│   │       ├── date/         # Formatação de datas
+│   │       ├── env/          # Variáveis de ambiente
+│   │       ├── provider/     # APIs externas
+│   │       └── http/         # Controllers
 │   └── package.json
 │
 ├── collector/               # Coletor Python
@@ -380,12 +386,12 @@ desafio-gdash/
   - [X] Gera/retorna insights de IA (endpoint próprio)  
   - [X] Exporta dados em CSV/XLSX  
   - [X] Implementa CRUD de usuários + autenticação  
-  - [ ] (Opcional) Integração com API pública paginada  
+  - [X] (Opcional) Integração com API pública paginada  
 - [X] Frontend React + Vite + Tailwind + shadcn/ui:
   - [X] Dashboard de clima com dados reais  
   - [X] Exibição de insights de IA  
   - [X] CRUD de usuários + login  
-  - [ ] (Opcional) Página consumindo API pública paginada  
+  - [X] (Opcional) Página consumindo API pública paginada  
 - [X] Docker Compose sobe todos os serviços  
 - [X] Código em TypeScript (backend e frontend)  
 - [X] Vídeo explicativo (máx. 5 minutos)  
