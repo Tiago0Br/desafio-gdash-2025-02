@@ -1,4 +1,11 @@
-import { Gauge, LogOut, MenuIcon, ThermometerSun, User } from 'lucide-react'
+import {
+  Gauge,
+  LogOut,
+  MenuIcon,
+  Sparkle,
+  ThermometerSun,
+  User
+} from 'lucide-react'
 import { Button } from './ui/button'
 import { useAuth } from '@/hooks/use-auth'
 import { Navigate, useNavigate } from 'react-router-dom'
@@ -26,7 +33,6 @@ export function Header() {
   }
 
   return (
-
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 border-b bg-zinc-800 px-6 shadow-sm">
       <div className="flex items-center gap-2 font-bold text-xl text-primary">
         <ThermometerSun className="h-6 w-6" />
@@ -48,6 +54,14 @@ export function Header() {
         >
           <User className="size-5" />
           Users
+        </a>
+        <a
+          href="/star-wars"
+          data-active={window.location.pathname === '/star-wars'}
+          className="flex items-center font-semibold gap-2 px-4 py-2 rounded-md hover:bg-cyan-500 transition-colors data-[active=true]:bg-cyan-500"
+        >
+          <Sparkle className="size-5" />
+          Star Wars
         </a>
       </nav>
       <div className="hidden sm:flex items-center gap-4">
@@ -77,6 +91,10 @@ export function Header() {
             <DropdownMenuItem className="flex">
               <User className="size-5" />
               <a href="/users">Users</a>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex">
+              <Sparkle className="size-5" />
+              <a href="/star-wars">Star Wars</a>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>Sair</DropdownMenuItem>

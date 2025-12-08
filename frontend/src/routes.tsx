@@ -5,6 +5,7 @@ import { DashboardPage } from './pages/dashboard'
 import { UsersPage } from './pages/users'
 import { UpdateUserPage } from './pages/update-user'
 import { NotFoundPage } from './pages/not-found'
+import { StarWarsPage } from './pages/star-wars'
 
 export const routes = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ export const routes = createBrowserRouter([
       {
         path: '/users/update',
         element: <UpdateUserPage />
+      },
+      {
+        path: '/star-wars',
+        element: <StarWarsPage />
       }
     ]
   },

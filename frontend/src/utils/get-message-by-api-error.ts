@@ -7,7 +7,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   USER_ALREADY_EXISTS: 'E-mail já cadastrado.',
   COULD_NOT_GENERATE_FILE: 'Não foi possível gerar o arquivo.',
   AI_RESPONSE_NOT_AVAILABLE: 'Não foi possível gerar a resposta da IA.',
-  INTERNAL_SERVER_ERROR: 'Erro interno do servidor'
+  INTERNAL_SERVER_ERROR: 'Erro interno do servidor',
+  STAR_WARS_API_UNAVAILABLE: 'API de Star Wars não disponível no momento'
 }
 
 export function getMessageByApiError(error: unknown) {
