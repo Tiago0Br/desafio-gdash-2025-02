@@ -1,0 +1,9 @@
+# Ignora o binário compilado na sua máquina (se houver)
+worker
+main
+worker.exe
+main.exe
+
+.git
+.env
+.DS_Store

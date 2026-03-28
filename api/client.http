@@ -1,0 +1,60 @@
+@baseUrl = http://localhost:3000/api
+@token = {{authenticate.response.body.access_token}}
+
+# @name create_account
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "email": "johndoe2@example.com",
+  "name": "John Doe",
+  "password": "123456"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/auth
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "123456"
+}
+
+###
+
+# @name list_accounts
+GET {{baseUrl}}/users
+Authorization: Bearer {{token}}
+
+###
+
+# @name update_account
+PUT {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "email": "johndoe3@example.com",
+  "name": "John Doe",
+  "password": "123456"
+}
+
+###
+
+# @name delete_account
+DELETE {{baseUrl}}/users
+Authorization: Bearer {{token}}
+
+###
+
+# @name get_weather_logs
+GET {{baseUrl}}/weather/logs
+Authorization: Bearer {{token}}
+
+###
+
+# @name get_ai_insights
+GET {{baseUrl}}/weather/insights
+Authorization: Bearer {{token}}
